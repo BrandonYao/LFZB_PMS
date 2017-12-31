@@ -1,0 +1,52 @@
+﻿<Window x:Class="LFZB_PMS.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LFZB_PMS.Command"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="700" Width="1000">
+
+    <Window.CommandBindings>
+        <CommandBinding Command="local:MenuCmd.Cmd_Menu_ssrkd" Executed="CommandBinding_Executed" CanExecute="CommandBinding_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.Cmd_Menu_fdsz" Executed="CommandBinding_Executed" CanExecute="CommandBinding_CanExecute"></CommandBinding>
+    </Window.CommandBindings>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="617*"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Header="基础资料(_B)">
+                <MenuItem Command="local:MenuCmd.Cmd_Menu_fdsz"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="总库管理(_Z)">
+                <MenuItem Command="local:MenuCmd.Cmd_Menu_ssrkd"></MenuItem>
+                <MenuItem Header="总库旧料退库" Click="MenuItem_Click"></MenuItem>
+                <MenuItem Header="总库数据修改"></MenuItem>
+                <MenuItem Header="首饰大类修改"></MenuItem>
+                <MenuItem Header="自由格式标签打印"></MenuItem>
+                <MenuItem Header="首饰操作一览表"></MenuItem>
+                <MenuItem Header="首饰明细一览表"></MenuItem>
+                <MenuItem Header="首饰入库明细表"></MenuItem>
+                <MenuItem Header="首饰入库统计表"></MenuItem>
+                <MenuItem Header="总库修改明细表"></MenuItem>
+                <MenuItem Header="总库修改统计表"></MenuItem>
+                <MenuItem Header="旧料退库明细表"></MenuItem>
+                <MenuItem Header="旧料退库统计表"></MenuItem>
+                <MenuItem Header="总库旧料库存表"></MenuItem>
+                <MenuItem Header="总库库存明细表"></MenuItem>
+                <MenuItem Header="总库库存统计表"></MenuItem>
+                <MenuItem Header="总库进销存汇总表"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="分销管理(_F)"></MenuItem>
+            <MenuItem Header="销售管理(_X)"></MenuItem>
+            <MenuItem Header="会员管理(_V)"></MenuItem>
+            <MenuItem Header="系统维护(_S)"></MenuItem>
+            <MenuItem Header="帮助(_H)">
+                <MenuItem Header="关于"></MenuItem>
+            </MenuItem>
+        </Menu>
+    </Grid>
+</Window>
