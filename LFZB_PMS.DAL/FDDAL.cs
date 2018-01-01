@@ -20,7 +20,7 @@ namespace LFZB_PMS.DAL
         /// <returns></returns>
         public DataTable GetFDInfo()
         {
-            string sql = "select * from base_fd where fdstate=1";
+            string sql = "select * from sys_fd where fdstate=1";
             DataSet ds = mySql.DS(sql);
             return ds.Tables[0];
         }

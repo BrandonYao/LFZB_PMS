@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LFZB_PMS"
         mc:Ignorable="d"
-        Title="用户登陆" Height="300" Width="300">
+        Title="用户登陆" Height="300" Width="400" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -22,11 +22,25 @@
         </Grid.RowDefinitions>
         <TextBlock Text="龙凤珠宝管理系统" Grid.ColumnSpan="3"  HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         <TextBlock Text="选择分店：" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
-        <ComboBox Name="cbfd" Grid.Row="1" Grid.Column="1" Margin="5"></ComboBox>
+        <ComboBox Name="cbfd" Grid.Row="1" Grid.Column="1" Margin="5" AlternationCount="2" SelectionChanged="cbfd_SelectionChanged" VerticalContentAlignment="Center">
+            <ComboBox.ItemContainerStyle>
+                <Style TargetType="ComboBoxItem">
+                    <Setter Property="Padding" Value="3"/>
+                    <Style.Triggers>
+                        <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                            <Setter Property="Background" Value="Lavender"/>
+                        </Trigger>
+                        <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                            <Setter Property="Background" Value="AliceBlue"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ComboBox.ItemContainerStyle>
+        </ComboBox>
         <TextBlock Text="选择账号：" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
-        <ComboBox Name="cbCode" Grid.Row="2" Grid.Column="1" Margin="5"></ComboBox>
+        <ComboBox Name="cbCode" Grid.Row="2" Grid.Column="1" Margin="5" IsEditable="True" VerticalContentAlignment="Center"></ComboBox>
         <TextBlock Text="登陆密码：" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
-        <PasswordBox Name="pwPassword" Grid.Row="3" Grid.Column="1" Margin="5"></PasswordBox>
-        <Button Content="登 陆(_L)" Grid.Row="4" Grid.Column="1" Margin="10"></Button>
+        <PasswordBox Name="pwPassword" Grid.Row="3" Grid.Column="1" Margin="5" VerticalContentAlignment="Center"></PasswordBox>
+        <Button Content="登 陆(_L)" Grid.Row="4" Grid.Column="1" Margin="10" Click="Login_Click"></Button>
     </Grid>
 </Window>

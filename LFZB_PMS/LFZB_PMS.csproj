@@ -56,13 +56,17 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Class\Config.cs" />
-    <Compile Include="Command\FDCmd.cs" />
+    <Compile Include="Class\Data.cs" />
+    <Compile Include="Command\BaseCmd.cs" />
     <Compile Include="Command\MenuCmd.cs" />
     <Compile Include="WinLogin.xaml.cs">
       <DependentUpon>WinLogin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="基础资料\WinFD.xaml.cs">
-      <DependentUpon>WinFD.xaml</DependentUpon>
+    <Compile Include="基础资料\UCGYSWH.xaml.cs">
+      <DependentUpon>UCGYSWH.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="系统维护\WinUser.xaml.cs">
+      <DependentUpon>WinUser.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -80,7 +84,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="基础资料\WinFD.xaml">
+    <Page Include="基础资料\UCGYSWH.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="系统维护\WinUser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -117,7 +125,6 @@
     <Folder Include="分销管理\" />
     <Folder Include="帮助\" />
     <Folder Include="总库管理\" />
-    <Folder Include="系统维护\" />
     <Folder Include="销售管理\" />
   </ItemGroup>
   <ItemGroup>
@@ -125,6 +132,27 @@
       <Project>{fa6809a8-cb0d-4006-8b5f-8311b5778d99}</Project>
       <Name>LFZB_PMS.DAL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\cancle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\print.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\export.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

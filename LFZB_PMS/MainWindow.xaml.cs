@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,24 +21,472 @@ namespace LFZB_PMS
     /// </summary>
     public partial class MainWindow : Window
     {
+        DAL.UserDAL userDal = new DAL.UserDAL(Config.Connection.Server);
+        DAL.MessageDAL msgDal = new DAL.MessageDAL();
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            new WinFD().Show();
-        }
-        bool ssrkd = true;
-        private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = ssrkd;
+            cmdState = userDal.GetMenu(Data.FDCode, Data.UserCode);
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        Dictionary<string, bool> cmdState = new Dictionary<string, bool>();
+
+        #region 基础资料
+        private void gyswh_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            ssrkd = !ssrkd;
+
         }
+        private void fxswh_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void ssppwh_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void csmcwh_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void bsmcwh_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void bssxwh_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void ssmcwh_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void zkkwwh_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void fxgzwh_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void xtrywh_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void xstcsz_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void xsmrzk_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void sybzwh_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void cxyhxm_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void syfswh_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void xsxtsx_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void sslspz_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void sstpwh_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void sstpxz_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void xshsjj_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void bsdjsz_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void shywh_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        #endregion
+
+        private void Menu_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            RoutedUICommand cmd = (RoutedUICommand)e.Command;
+            e.CanExecute = cmdState.Keys.Contains(cmd.Name) && cmdState[cmd.Name];
+        }
+
+        #region 总库管理
+        private void ssrkd_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+        private void sstkd_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+        private void zkjltk_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+        private void zksjxg_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+        private void ssdlxg_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+        private void zygsbqdy_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+        private void ssczylb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+        private void ssmxylb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+        private void ssrkmxb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+        private void ssrktjb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+        private void zkxgmxb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+        private void zkxgtjb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+        private void jltkmxb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+        private void jltktjb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+        private void zkjlkcb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+        private void zkkcmxb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+        private void zkkctjb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+        private void zkjxchzb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+        #endregion
+
+        #region 分销管理
+        private void fxjhd_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void fxthd_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void fxtbd_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void fxtgd_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void fxjlhc_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void fxsjxg_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void fxkcpd_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void fxjhmxb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void fxjhtjb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void fxtgmxb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void fxttmxb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void fxtttjb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void fxxgmxb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void fxxgtjb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void jlhcmxb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void jlhctjb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void fxjlkcb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void fxjlstc_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void fxkcmxb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void fxkctjb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void fxsjxchz_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region 销售管理
+        private void ssxsd_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void ssxtd_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void xsjjd_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void xsdjd_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void fxsyhzd_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void ssxsmxb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void ssxstjb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void ssxtmxb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void ssxttjb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void jlhsmxb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void jlhstjb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void hygwtjb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void hythtjb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region 会员管理
+        private void khhywh_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void khdxpt_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void jfdhdj_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void khfwdj_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void khhfdj_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void khhydj_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void jfdhcx_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void jbzlwh_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void hydjsz_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void dljfsz_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void ssjfsz_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void hyyhsz_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void zpzlwh_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void zpjkd_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void zptkd_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void zptbd_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void zptktjb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void zptctjb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void zptrtjb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void zpdhmxb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void zpdhtjb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void zpjskcb_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region 系统维护
+        private void yhwh_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void yhqx_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void xgmm_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void xtcs_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void bdcs_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region 帮助
+        private void gy_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        #endregion
     }
 }

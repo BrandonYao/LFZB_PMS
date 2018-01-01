@@ -5,11 +5,117 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LFZB_PMS.Command"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1000">
+        Title="MainWindow" Height="700" Width="1000" WindowState="Maximized" Loaded="Window_Loaded">
 
     <Window.CommandBindings>
-        <CommandBinding Command="local:MenuCmd.Cmd_Menu_ssrkd" Executed="CommandBinding_Executed" CanExecute="CommandBinding_CanExecute"></CommandBinding>
-        <CommandBinding Command="local:MenuCmd.Cmd_Menu_fdsz" Executed="CommandBinding_Executed" CanExecute="CommandBinding_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_gyswh" Executed="gyswh_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_fxswh" Executed="fxswh_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_ssppwh" Executed="ssppwh_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_csmcwh" Executed="csmcwh_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_bsmcwh" Executed="bsmcwh_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_bssxwh" Executed="bssxwh_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_ssmcwh" Executed="ssmcwh_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_zkkwwh" Executed="zkkwwh_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_fxgzwh" Executed="fxgzwh_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_xtrywh" Executed="xtrywh_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_xstcsz" Executed="xstcsz_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_xsmrzk" Executed="xsmrzk_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_sybzwh" Executed="sybzwh_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_cxyhxm" Executed="cxyhxm_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_syfswh" Executed="syfswh_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_xsxtsx" Executed="xsxtsx_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_sslspz" Executed="sslspz_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_sstpwh" Executed="sstpwh_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_sstpxz" Executed="sstpxz_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_xshsjj" Executed="xshsjj_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_bsdjsz" Executed="bsdjsz_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_shywh" Executed="shywh_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+
+        <CommandBinding Command="local:MenuCmd.cmd_menu_ssrkd" Executed="ssrkd_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_sstkd" Executed="sstkd_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_zkjltk" Executed="zkjltk_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_zksjxg" Executed="zksjxg_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_ssdlxg" Executed="ssdlxg_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_zygsbqdy" Executed="zygsbqdy_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_ssczylb" Executed="ssczylb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_ssmxylb" Executed="ssmxylb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_ssrkmxb" Executed="ssrkmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_ssrktjb" Executed="ssrktjb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_zkxgmxb" Executed="zkxgmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_zkxgtjb" Executed="zkxgtjb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_jltkmxb" Executed="jltkmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_jltktjb" Executed="jltktjb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_zkjlkcb" Executed="zkjlkcb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_zkkcmxb" Executed="zkkcmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_zkkctjb" Executed="zkkctjb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_zkjxchzb" Executed="zkjxchzb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        
+        <CommandBinding Command="local:MenuCmd.cmd_menu_fxjhd" Executed="fxjhmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_fxthd" Executed="fxjhmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_fxtbd" Executed="fxjhmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_fxtgd" Executed="fxjhmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_fxjlhc" Executed="fxjhmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_fxsjxg" Executed="fxjhmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_fxkcpd" Executed="fxjhmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_fxjhmxb" Executed="fxjhmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_fxjhtjb" Executed="fxjhmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_fxtgmxb" Executed="fxjhmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_fxttmxb" Executed="fxjhmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_fxtttjb" Executed="fxjhmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_fxxgmxb" Executed="fxjhmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_fxxgtjb" Executed="fxjhmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_jlhcmxb" Executed="fxjhmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_jlhctjb" Executed="fxjhmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_fxjlkcb" Executed="fxjhmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_fxjlstc" Executed="fxjhmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_fxkcmxb" Executed="fxjhmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_fxkctjb" Executed="fxjhmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_fxsjxchz" Executed="fxjhmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+
+        <CommandBinding Command="local:MenuCmd.cmd_menu_ssxsd" Executed="ssxsd_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_ssxtd" Executed="ssxtd_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_xsjjd" Executed="xsjjd_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_xsdjd" Executed="xsdjd_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_fxsyhzb" Executed="fxsyhzd_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_ssxsmxb" Executed="ssxsmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_ssxstjb" Executed="ssxstjb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_ssxtmxb" Executed="ssxtmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_ssxttjb" Executed="ssxttjb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_jlhsmxb" Executed="jlhsmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_jlhstjb" Executed="jlhstjb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_hygwtjb" Executed="hygwtjb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_hythtjb" Executed="hythtjb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+
+        <CommandBinding Command="local:MenuCmd.cmd_menu_khhywh" Executed="khhywh_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_khdxpt" Executed="khdxpt_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_jfdhdj" Executed="jfdhdj_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_khfwdj" Executed="khfwdj_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_khhfdj" Executed="khhfdj_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_khhydj" Executed="khhydj_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_jfdhcx" Executed="jfdhcx_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_jbzlwh" Executed="jbzlwh_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_hydjsz" Executed="hydjsz_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_dljfsz" Executed="dljfsz_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_ssjfsz" Executed="ssjfsz_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_hyyhsz" Executed="hyyhsz_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_zpzlwh" Executed="zpzlwh_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_zpjkd" Executed="zpjkd_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_zptkd" Executed="zptkd_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_zptbd" Executed="zptbd_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_zptktjb" Executed="zptktjb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_zptctjb" Executed="zptctjb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_zptrtjb" Executed="zptrtjb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_zpdhmxb" Executed="zpdhmxb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_zpdhtjb" Executed="zpdhtjb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_zpjskcb" Executed="zpjskcb_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+
+        <CommandBinding Command="local:MenuCmd.cmd_menu_yhwh" Executed="yhwh_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_yhqx" Executed="yhqx_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_xgmm" Executed="xgmm_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_xtcs" Executed="xtcs_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:MenuCmd.cmd_menu_bdcs" Executed="bdcs_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
+        
+        <CommandBinding Command="local:MenuCmd.cmd_menu_gy" Executed="gy_Executed" CanExecute="Menu_CanExecute"></CommandBinding>
     </Window.CommandBindings>
     
     <Grid>
@@ -17,35 +123,122 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="617*"/>
         </Grid.RowDefinitions>
-        <Menu Grid.Row="0">
+        <Menu Grid.Row="0" FontSize="14" Padding="3">
             <MenuItem Header="基础资料(_B)">
-                <MenuItem Command="local:MenuCmd.Cmd_Menu_fdsz"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_gyswh"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_fxswh"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_ssppwh"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_csmcwh"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_bsmcwh"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_bssxwh"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_ssmcwh"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_zkkwwh"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_fxgzwh"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_xtrywh"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_xstcsz"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_xsmrzk"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_sybzwh"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_cxyhxm"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_syfswh"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_xsxtsx"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_sslspz"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_sstpwh"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_sstpxz"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_xshsjj"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_bsdjsz"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_shywh"></MenuItem>
             </MenuItem>
             <MenuItem Header="总库管理(_Z)">
-                <MenuItem Command="local:MenuCmd.Cmd_Menu_ssrkd"></MenuItem>
-                <MenuItem Header="总库旧料退库" Click="MenuItem_Click"></MenuItem>
-                <MenuItem Header="总库数据修改"></MenuItem>
-                <MenuItem Header="首饰大类修改"></MenuItem>
-                <MenuItem Header="自由格式标签打印"></MenuItem>
-                <MenuItem Header="首饰操作一览表"></MenuItem>
-                <MenuItem Header="首饰明细一览表"></MenuItem>
-                <MenuItem Header="首饰入库明细表"></MenuItem>
-                <MenuItem Header="首饰入库统计表"></MenuItem>
-                <MenuItem Header="总库修改明细表"></MenuItem>
-                <MenuItem Header="总库修改统计表"></MenuItem>
-                <MenuItem Header="旧料退库明细表"></MenuItem>
-                <MenuItem Header="旧料退库统计表"></MenuItem>
-                <MenuItem Header="总库旧料库存表"></MenuItem>
-                <MenuItem Header="总库库存明细表"></MenuItem>
-                <MenuItem Header="总库库存统计表"></MenuItem>
-                <MenuItem Header="总库进销存汇总表"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_ssrkd"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_sstkd"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_zkjltk"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_zksjxg"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_ssdlxg"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_zygsbqdy"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_ssczylb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_ssmxylb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_ssrkmxb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_ssrktjb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_zkxgmxb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_zkxgtjb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_jltkmxb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_jltktjb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_zkjlkcb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_zkkcmxb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_zkkctjb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_zkjxchzb"></MenuItem>
             </MenuItem>
-            <MenuItem Header="分销管理(_F)"></MenuItem>
-            <MenuItem Header="销售管理(_X)"></MenuItem>
-            <MenuItem Header="会员管理(_V)"></MenuItem>
-            <MenuItem Header="系统维护(_S)"></MenuItem>
+            <MenuItem Header="分销管理(_F)">
+                <MenuItem Command="local:MenuCmd.cmd_menu_fxjhd"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_fxthd"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_fxtbd"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_fxtgd"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_fxjlhc"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_fxsjxg"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_fxkcpd"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_fxjhmxb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_fxjhtjb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_fxtgmxb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_fxttmxb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_fxtttjb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_fxxgmxb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_fxxgtjb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_jlhcmxb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_jlhctjb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_fxjlkcb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_fxjlstc"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_fxkcmxb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_fxkctjb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_fxsjxchz"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="销售管理(_X)">
+                <MenuItem Command="local:MenuCmd.cmd_menu_ssxsd"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_ssxtd"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_xsjjd"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_xsdjd"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_fxsyhzb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_ssxsmxb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_ssxstjb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_ssxtmxb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_ssxttjb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_jlhsmxb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_jlhstjb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_hygwtjb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_hythtjb"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="会员管理(_V)">
+                <MenuItem Command="local:MenuCmd.cmd_menu_khhywh"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_khdxpt"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_jfdhdj"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_khfwdj"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_khhfdj"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_khhydj"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_jfdhcx"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_jbzlwh"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_hydjsz"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_dljfsz"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_ssjfsz"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_hyyhsz"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_zpzlwh"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_zpjkd"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_zptkd"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_zptbd"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_zptktjb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_zptctjb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_zptrtjb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_zpdhmxb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_zpdhtjb"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_zpjskcb"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="系统维护(_S)">
+                <MenuItem Command="local:MenuCmd.cmd_menu_yhwh"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_yhqx"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_xgmm"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_xtcs"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_bdcs"></MenuItem>
+            </MenuItem>
             <MenuItem Header="帮助(_H)">
-                <MenuItem Header="关于"></MenuItem>
+                <MenuItem Command="local:MenuCmd.cmd_menu_gy"></MenuItem>
             </MenuItem>
         </Menu>
     </Grid>
