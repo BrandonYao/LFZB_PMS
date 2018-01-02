@@ -1,0 +1,32 @@
+﻿<Window x:Class="LFZB_PMS.WinFD"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LFZB_PMS"
+        xmlns:cmd="clr-namespace:LFZB_PMS.Command"
+        mc:Ignorable="d"
+        Title="WinFD" Height="300" Width="300">
+    <Window.CommandBindings>
+        <CommandBinding Command="cmd:BaseCmd.cmd_edit"></CommandBinding>
+        <CommandBinding Command="cmd:BaseCmd.cmd_del"></CommandBinding>
+    </Window.CommandBindings>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ToolBar Grid.Row="0">
+            <Button Command="cmd:BaseCmd.cmd_edit" Content="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}"></Button>
+            <Button Command="cmd:BaseCmd.cmd_del" Content="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}"></Button>
+            <Separator></Separator>
+        </ToolBar>
+
+        <DataGrid Grid.Row="1" Name="dgList">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="分店编号" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="分店名称" Width="2*"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
