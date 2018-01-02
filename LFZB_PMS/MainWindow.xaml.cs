@@ -27,6 +27,35 @@ namespace LFZB_PMS
         {
             InitializeComponent();
         }
+        void ShowUC(UserControl uc, string title)
+        {
+            bool add = true;
+            
+            if (tcMenu.Items.Count > 0)
+            {
+                foreach (TabItem item in tcMenu.Items)
+                {
+                    if (item.Header.ToString().Trim() == title)
+                    {
+                        add = false;
+                        tcMenu.SelectedItem = item;
+                        break;
+                    }
+                }
+            }
+            if (add)
+            {
+                TabItem ti = new TabItem();
+                ti.Header = "  " + title + "  ";
+                ti.FontSize = 16;
+                ti.FontWeight = FontWeights.Bold;
+                uc.Height = tcMenu.ActualHeight < uc.Height ? tcMenu.ActualHeight : uc.Height;
+                uc.Width = tcMenu.ActualWidth < uc.Width ? tcMenu.ActualWidth : uc.Width;
+                ti.Content = uc;
+                tcMenu.Items.Add(ti);
+                tcMenu.SelectedItem = ti;
+            }
+        }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -38,7 +67,9 @@ namespace LFZB_PMS
         #region 基础资料
         private void gyswh_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            RoutedUICommand cmd = (RoutedUICommand)e.Command;
+            UCGYSWH uc = new UCGYSWH();
+            ShowUC(uc, cmd.Text);
         }
         private void fxswh_Executed(object sender, ExecutedRoutedEventArgs e)
         {

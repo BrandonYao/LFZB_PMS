@@ -121,7 +121,9 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="617*"/>
+            <RowDefinition Height="0"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" FontSize="14" Padding="3">
             <MenuItem Header="基础资料(_B)">
@@ -241,5 +243,13 @@
                 <MenuItem Command="local:MenuCmd.cmd_menu_gy"></MenuItem>
             </MenuItem>
         </Menu>
+        <TabControl Name="tcMenu" Grid.Row="2">
+            <TabControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="123"></MenuItem>
+                </ContextMenu>
+            </TabControl.ContextMenu>
+        </TabControl>
+        <StatusBar Grid.Row="3"></StatusBar>
     </Grid>
 </Window>

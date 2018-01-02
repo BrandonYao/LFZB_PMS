@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Class\Converter.cs" />
     <Compile Include="Class\Config.cs" />
     <Compile Include="Class\Data.cs" />
     <Compile Include="Command\BaseCmd.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="基础资料\UCGYSWH.xaml.cs">
       <DependentUpon>UCGYSWH.xaml</DependentUpon>
     </Compile>
+    <Compile Include="基础资料\WinFD.xaml.cs" />
     <Compile Include="系统维护\WinUser.xaml.cs">
       <DependentUpon>WinUser.xaml</DependentUpon>
     </Compile>
@@ -87,6 +89,10 @@
     <Page Include="基础资料\UCGYSWH.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="基础资料\WinFD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="系统维护\WinUser.xaml">
       <SubType>Designer</SubType>

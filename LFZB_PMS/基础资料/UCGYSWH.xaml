@@ -6,25 +6,40 @@
              xmlns:local="clr-namespace:LFZB_PMS"
              xmlns:cmd="clr-namespace:LFZB_PMS.Command"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="600" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded">
+    <UserControl.Resources>
+        <local:IntToBoolConverter x:Key="boolConverter"></local:IntToBoolConverter>
+        <local:ColorConverter x:Key="colorConverter"></local:ColorConverter>
+    </UserControl.Resources>
     <UserControl.CommandBindings>
-        <CommandBinding Command="cmd:BaseCmd.cmd_add"></CommandBinding>
+        <CommandBinding Command="cmd:BaseCmd.cmd_add" ></CommandBinding>
         <CommandBinding Command="cmd:BaseCmd.cmd_edit"></CommandBinding>
         <CommandBinding Command="cmd:BaseCmd.cmd_del"></CommandBinding>
         <CommandBinding Command="cmd:BaseCmd.cmd_cancle"></CommandBinding>
-        <CommandBinding Command="cmd:BaseCmd.cmd_save"></CommandBinding>
+        <CommandBinding Command="cmd:BaseCmd.cmd_save" Executed="Save_Executed"></CommandBinding>
         <CommandBinding Command="cmd:BaseCmd.cmd_print"></CommandBinding>
         <CommandBinding Command="cmd:BaseCmd.cmd_export"></CommandBinding>
     </UserControl.CommandBindings>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <ToolBar Grid.Row="0" ToolBarTray.IsLocked="True">
+        <DataGrid Grid.RowSpan="2" Name="dgType" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="供应商类型" Binding="{Binding Path=GYSZName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="主营产品" Binding="{Binding Path=ZYCPName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="数量" Binding="{Binding Path=GYSCount}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <ToolBar Grid.Row="0" ToolBarTray.IsLocked="True" Grid.Column="1">
             <Separator></Separator>
             <Button Command="cmd:BaseCmd.cmd_add" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
-                <Image Source="/LFZB_PMS;component/Images/add.png" Margin="-2"></Image>
+                <Image Source="/LFZB_PMS;component/Images/add.png" Margin="-5"></Image>
             </Button>
             <Button Command="cmd:BaseCmd.cmd_edit" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
                 <Image Source="/LFZB_PMS;component/Images/edit.png" Margin="2"></Image>
@@ -48,5 +63,31 @@
             </Button>
             <Separator></Separator>
         </ToolBar>
+        <DataGrid Grid.Row="1" Grid.Column="1" Name="dgData" CanUserAddRows="False" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="供应商类型" Binding="{Binding Path=GYSZName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="主营产品" Binding="{Binding Path=ZYCPName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="供应商名称" Binding="{Binding Path=GYSName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="联系地址" Binding="{Binding Path=LXDZ}"></DataGridTextColumn>
+                <DataGridTextColumn Header="联系人" Binding="{Binding Path=LXR}"></DataGridTextColumn>
+                <DataGridTextColumn Header="邮政编码" Binding="{Binding Path=YZBM}"></DataGridTextColumn>
+                <DataGridTextColumn Header="联系电话" Binding="{Binding Path=LXDH}"></DataGridTextColumn>
+                <DataGridTextColumn Header="传真号码" Binding="{Binding Path=CZHM}"></DataGridTextColumn>
+                <DataGridTextColumn Header="电子邮箱" Binding="{Binding Path=Email}"></DataGridTextColumn>
+                <DataGridTextColumn Header="手机号码" Binding="{Binding Path=SJHM}"></DataGridTextColumn>
+                <DataGridTextColumn Header="开户银行" Binding="{Binding Path=KHYH}"></DataGridTextColumn>
+                <DataGridTextColumn Header="银行账户" Binding="{Binding Path=YHZH}"></DataGridTextColumn>
+                <DataGridTextColumn Header="备注" Binding="{Binding Path=BZ}"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="是否有效">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding GYSState, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="最后修改人" Binding="{Binding Path=UserName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="最后修改日期" Binding="{Binding Path=Date}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

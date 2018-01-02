@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static LFZB_PMS.WinFD;
 using static LFZB_PMS.WinUser;
 
 namespace LFZB_PMS
@@ -83,7 +84,11 @@ namespace LFZB_PMS
                 userCode = cbCode.SelectedValue.ToString();
             string pw = pwPassword.Password;
             if (userDal.Login(fdCode, userCode, pw))
+            {
                 new MainWindow().Show();
+                Data.FDCode = fdCode;
+                Data.UserCode = userCode;
+            }
             else msgDal.ShowWarning("登陆失败");
         }
     }
