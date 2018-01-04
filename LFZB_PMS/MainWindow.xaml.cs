@@ -46,6 +46,7 @@ namespace LFZB_PMS
             if (add)
             {
                 TabItem ti = new TabItem();
+
                 ti.Header = "  " + title + "  ";
                 ti.FontSize = 16;
                 ti.FontWeight = FontWeights.Bold;
@@ -55,6 +56,16 @@ namespace LFZB_PMS
                 tcMenu.Items.Add(ti);
                 tcMenu.SelectedItem = ti;
             }
+        }
+        void ItemClose()
+        {
+            CloseCurrent();
+        }
+        void CloseCurrent()
+        {
+            int i = tcMenu.SelectedIndex;
+            if (i >= 0)
+                tcMenu.Items.RemoveAt(i);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -69,6 +80,7 @@ namespace LFZB_PMS
         {
             RoutedUICommand cmd = (RoutedUICommand)e.Command;
             UCGYSWH uc = new UCGYSWH();
+            uc.UCClose += new UCGYSWH.HandleClose(ItemClose);
             ShowUC(uc, cmd.Text);
         }
         private void fxswh_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -519,5 +531,26 @@ namespace LFZB_PMS
 
         }
         #endregion
+
+        private void Menu_Close_Click(object sender, RoutedEventArgs e)
+        {
+            CloseCurrent();
+        }
+
+        private void Menu_CloseAll_Click(object sender, RoutedEventArgs e)
+        {
+            tcMenu.Items.Clear();
+        }
+
+        private void Menu_CloseOther_Click(object sender, RoutedEventArgs e)
+        {
+            int i = tcMenu.SelectedIndex;
+            int num = tcMenu.Items.Count;
+            for (int n = num - 1; n >= 0; n--)
+            {
+                if (n != i)
+                    tcMenu.Items.RemoveAt(n);
+            }
+        }
     }
 }

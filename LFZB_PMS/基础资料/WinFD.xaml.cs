@@ -27,7 +27,7 @@ namespace LFZB_PMS
         }
 
         List<FDClass> FDList = new List<FDClass>();
-        bool isDirty = false;
+        //bool isDirty = false;
         public class FDClass
         {
             /// <summary>

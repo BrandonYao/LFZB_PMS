@@ -246,7 +246,9 @@
         <TabControl Name="tcMenu" Grid.Row="2">
             <TabControl.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="123"></MenuItem>
+                    <!--<MenuItem Header="关闭" Click="Menu_Close_Click"></MenuItem>-->
+                    <MenuItem Header="关闭所有选项卡" Click="Menu_CloseAll_Click"></MenuItem>
+                    <MenuItem Header="关闭其他选项卡"  Click="Menu_CloseOther_Click"></MenuItem>
                 </ContextMenu>
             </TabControl.ContextMenu>
         </TabControl>

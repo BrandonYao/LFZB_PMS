@@ -6,19 +6,37 @@
              xmlns:local="clr-namespace:LFZB_PMS"
              xmlns:cmd="clr-namespace:LFZB_PMS.Command"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="600" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded">
+             d:DesignHeight="600" d:DesignWidth="1200" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded">
     <UserControl.Resources>
         <local:IntToBoolConverter x:Key="boolConverter"></local:IntToBoolConverter>
         <local:ColorConverter x:Key="colorConverter"></local:ColorConverter>
+        <Style x:Key="textBlockStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="10,3,0,3"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="textBoxStyle" TargetType="TextBox">
+            <Setter Property="Margin" Value="3"></Setter>
+            <Setter Property="MinWidth" Value="60"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="comboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Margin" Value="3"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        </Style>
     </UserControl.Resources>
     <UserControl.CommandBindings>
-        <CommandBinding Command="cmd:BaseCmd.cmd_add" ></CommandBinding>
-        <CommandBinding Command="cmd:BaseCmd.cmd_edit"></CommandBinding>
-        <CommandBinding Command="cmd:BaseCmd.cmd_del"></CommandBinding>
-        <CommandBinding Command="cmd:BaseCmd.cmd_cancle"></CommandBinding>
-        <CommandBinding Command="cmd:BaseCmd.cmd_save" Executed="Save_Executed"></CommandBinding>
-        <CommandBinding Command="cmd:BaseCmd.cmd_print"></CommandBinding>
-        <CommandBinding Command="cmd:BaseCmd.cmd_export"></CommandBinding>
+        <CommandBinding Command="cmd:BaseCmd.cmd_refresh" Executed="Refresh_Executed" CanExecute="Refresh_CanExecute"></CommandBinding>
+        <CommandBinding Command="cmd:BaseCmd.cmd_search" Executed="Search_Executed" CanExecute="Search_CanExecute"></CommandBinding>
+        <CommandBinding Command="cmd:BaseCmd.cmd_add" Executed="Add_Executed" CanExecute="Add_CanExecute"></CommandBinding>
+        <CommandBinding Command="cmd:BaseCmd.cmd_edit" Executed="Edit_Executed" CanExecute="Edit_CanExecute"></CommandBinding>
+        <CommandBinding Command="cmd:BaseCmd.cmd_del" Executed="Del_Executed" CanExecute="Del_CanExecute"></CommandBinding>
+        <CommandBinding Command="cmd:BaseCmd.cmd_cancle" Executed="Cancle_Executed" CanExecute="Cancle_CanExecute"></CommandBinding>
+        <CommandBinding Command="cmd:BaseCmd.cmd_save" Executed="Save_Executed" CanExecute="Save_CanExecute"></CommandBinding>
+        <CommandBinding Command="cmd:BaseCmd.cmd_print" Executed="Print_Executed" CanExecute="Print_Execute"></CommandBinding>
+        <CommandBinding Command="cmd:BaseCmd.cmd_export" Executed="Export_Executed" CanExecute="Export_CanExecute"></CommandBinding>
+        <CommandBinding Command="cmd:BaseCmd.cmd_close" Executed="Close_Executed" CanExecute="Close_CanExecute"></CommandBinding>
     </UserControl.CommandBindings>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -28,8 +46,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <DataGrid Grid.RowSpan="2" Name="dgType" AutoGenerateColumns="False" CanUserAddRows="False">
+        <DataGrid Grid.RowSpan="3" Name="dgType" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" SelectionChanged="dgType_SelectionChanged" AlternationCount="2">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="供应商类型" Binding="{Binding Path=GYSZName}"></DataGridTextColumn>
                 <DataGridTextColumn Header="主营产品" Binding="{Binding Path=ZYCPName}"></DataGridTextColumn>
@@ -37,33 +56,101 @@
             </DataGrid.Columns>
         </DataGrid>
         <ToolBar Grid.Row="0" ToolBarTray.IsLocked="True" Grid.Column="1">
+            <Button Command="cmd:BaseCmd.cmd_refresh" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
+                <Image Source="/LFZB_PMS;component/Images/refresh.png" Margin="2"></Image>
+            </Button>
+            <Separator></Separator>
+            <TextBlock Text="选择查找条件：" VerticalAlignment="Center" Margin="5"></TextBlock>
+            <ComboBox Name="cmbSearch" MinWidth="60"></ComboBox>
+            <TextBox Name="tbValue" MinWidth="100"></TextBox>
+            <Button Command="cmd:BaseCmd.cmd_search" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
+                <Image Source="/LFZB_PMS;component/Images/search.png" Margin="2"></Image>
+            </Button>
             <Separator></Separator>
             <Button Command="cmd:BaseCmd.cmd_add" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
-                <Image Source="/LFZB_PMS;component/Images/add.png" Margin="-5"></Image>
+                <Image Source="/LFZB_PMS;component/Images/add.png" Margin="0"></Image>
             </Button>
-            <Button Command="cmd:BaseCmd.cmd_edit" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
+            <Button Command="cmd:BaseCmd.cmd_edit" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}" Visibility="Collapsed">
                 <Image Source="/LFZB_PMS;component/Images/edit.png" Margin="2"></Image>
             </Button>
             <Button Command="cmd:BaseCmd.cmd_del" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
-                <Image Source="/LFZB_PMS;component/Images/delete.png" Margin="2"></Image>
+                <Image Source="/LFZB_PMS;component/Images/delete.png" Margin="0"></Image>
             </Button>
-            <Separator></Separator>
-            <Button Command="cmd:BaseCmd.cmd_cancle" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
+            <!--<Separator></Separator>-->
+            <Button Command="cmd:BaseCmd.cmd_cancle" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}" Visibility="Collapsed">
                 <Image Source="/LFZB_PMS;component/Images/cancle.png" Margin="1"></Image>
             </Button>
             <Button Command="cmd:BaseCmd.cmd_save" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
-                <Image Source="/LFZB_PMS;component/Images/save.png" Margin="1"></Image>
+                <Image Source="/LFZB_PMS;component/Images/save.png" Margin="2"></Image>
             </Button>
             <Separator></Separator>
             <Button Command="cmd:BaseCmd.cmd_print" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
-                <Image Source="/LFZB_PMS;component/Images/print.png" Margin="1"></Image>
+                <Image Source="/LFZB_PMS;component/Images/print.png" Margin="-1"></Image>
             </Button>
             <Button Command="cmd:BaseCmd.cmd_export" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
-                <Image Source="/LFZB_PMS;component/Images/export.png" Margin="1"></Image>
+                <Image Source="/LFZB_PMS;component/Images/export.png" Margin="-10"></Image>
             </Button>
             <Separator></Separator>
+            <Button Command="cmd:BaseCmd.cmd_close" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
+                <Image Source="/LFZB_PMS;component/Images/close.png" Margin="-4"></Image>
+            </Button>
         </ToolBar>
-        <DataGrid Grid.Row="1" Grid.Column="1" Name="dgData" CanUserAddRows="False" AutoGenerateColumns="False">
+        <Grid Grid.Row="1" Grid.Column="1" Name="gdData" Margin="0,0,0,10" Background="Transparent">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="供应商名称：" Grid.Row="1" Style="{StaticResource textBlockStyle}"></TextBlock>
+            <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="5" Style="{StaticResource textBoxStyle}" Text="{Binding Path=GYSName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewKeyDown="gys_PreviewKeyDown"></TextBox>
+            <TextBlock Text="供应商类型：" Grid.Row="2" Style="{StaticResource textBlockStyle}"></TextBlock>
+            <ComboBox Name="cmbgysz" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource comboBoxStyle}" SelectedValue="{Binding Path=GYSZCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Text="{Binding Path=GYSZName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DropDownClosed="cmb_DropDownClosed"></ComboBox>
+            <TextBlock Text="主营产品：" Grid.Row="2" Grid.Column="3" Style="{StaticResource textBlockStyle}"></TextBlock>
+            <ComboBox Name="cmbzycp" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Style="{StaticResource comboBoxStyle}" SelectedValue="{Binding Path=ZYCPCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Text="{Binding Path=ZYCPName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DropDownClosed="cmb_DropDownClosed"></ComboBox>
+            <TextBlock Text="联系地址：" Grid.Row="3" Style="{StaticResource textBlockStyle}"></TextBlock>
+            <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" Style="{StaticResource textBoxStyle}" Text="{Binding Path=LXDZ, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewKeyDown="gys_PreviewKeyDown"></TextBox>
+            <TextBlock Text="联系人：" Grid.Row="4" Style="{StaticResource textBlockStyle}"></TextBlock>
+            <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource textBoxStyle}" Text="{Binding Path=LXR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewKeyDown="gys_PreviewKeyDown"></TextBox>
+            <TextBlock Text="邮政编码：" Grid.Row="4" Grid.Column="2" Style="{StaticResource textBlockStyle}"></TextBlock>
+            <TextBox Grid.Row="4" Grid.Column="3" Style="{StaticResource textBoxStyle}" Text="{Binding Path=YZBM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewKeyDown="gys_PreviewKeyDown"></TextBox>
+            <TextBlock Text="电子邮箱：" Grid.Row="4" Grid.Column="4" Style="{StaticResource textBlockStyle}"></TextBlock>
+            <TextBox Grid.Row="4" Grid.Column="5" Style="{StaticResource textBoxStyle}" Text="{Binding Path=Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewKeyDown="gys_PreviewKeyDown"></TextBox>
+            <TextBlock Text="联系电话：" Grid.Row="5" Style="{StaticResource textBlockStyle}"></TextBlock>
+            <TextBox Grid.Row="5" Grid.Column="1" Style="{StaticResource textBoxStyle}" Text="{Binding Path=LXDH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewKeyDown="gys_PreviewKeyDown"></TextBox>
+            <TextBlock Text="传真号码：" Grid.Row="5" Grid.Column="2" Style="{StaticResource textBlockStyle}"></TextBlock>
+            <TextBox Grid.Row="5" Grid.Column="3" Style="{StaticResource textBoxStyle}" Text="{Binding Path=CZHM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewKeyDown="gys_PreviewKeyDown"></TextBox>
+            <TextBlock Text="手机号码：" Grid.Row="5" Grid.Column="4" Style="{StaticResource textBlockStyle}"></TextBlock>
+            <TextBox Grid.Row="5" Grid.Column="5" Style="{StaticResource textBoxStyle}" Text="{Binding Path=SJHM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewKeyDown="gys_PreviewKeyDown"></TextBox>
+            <TextBlock Text="开户银行：" Grid.Row="6" Style="{StaticResource textBlockStyle}"></TextBlock>
+            <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="5" Style="{StaticResource textBoxStyle}" Text="{Binding Path=KHYH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewKeyDown="gys_PreviewKeyDown"></TextBox>
+            <TextBlock Text="银行账户：" Grid.Row="7" Style="{StaticResource textBlockStyle}"></TextBlock>
+            <TextBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="5" Style="{StaticResource textBoxStyle}" Text="{Binding Path=YHZH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewKeyDown="gys_PreviewKeyDown"></TextBox>
+            <TextBlock Text="备注：" Grid.Row="8" Style="{StaticResource textBlockStyle}"></TextBlock>
+            <TextBox Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="5" Style="{StaticResource textBoxStyle}" Text="{Binding Path=BZ, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewKeyDown="gys_PreviewKeyDown"></TextBox>
+            <TextBlock Text="最后修改人：" Grid.Row="9" Style="{StaticResource textBlockStyle}"></TextBlock>
+            <TextBox Grid.Row="9" Grid.Column="1" Style="{StaticResource textBoxStyle}" IsReadOnly="True" Text="{Binding Path=UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBlock Text="最后修改时间：" Grid.Row="9" Grid.Column="2" Style="{StaticResource textBlockStyle}"></TextBlock>
+            <TextBox Grid.Row="9" Grid.Column="3" Style="{StaticResource textBoxStyle}" IsReadOnly="True" Text="{Binding Path=Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBlock Text="是否有效：" Grid.Row="9" Grid.Column="4" Style="{StaticResource textBlockStyle}"></TextBlock>
+            <CheckBox Grid.Row="9" Grid.Column="5" Margin="3" VerticalAlignment="Center" IsChecked="{Binding GYSState, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" Click="CheckBox_Click"></CheckBox>
+        </Grid>
+        <DataGrid Grid.Row="2" Grid.Column="1" Name="dgData" SelectionChanged="dgData_SelectionChanged" ItemsSource="{Binding Path=GYSList, ElementName=this}" LoadingRow="dgData_LoadingRow">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="供应商类型" Binding="{Binding Path=GYSZName}"></DataGridTextColumn>
                 <DataGridTextColumn Header="主营产品" Binding="{Binding Path=ZYCPName}"></DataGridTextColumn>
@@ -81,7 +168,7 @@
                 <DataGridTemplateColumn Header="是否有效">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <CheckBox IsChecked="{Binding GYSState, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
+                            <CheckBox IsChecked="{Binding GYSState, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"></CheckBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

@@ -41,9 +41,9 @@ namespace LFZB_PMS
                     list.Add(new FDClass() { FDCode = row["fdcode"].ToString().Trim(), FDName = row["fdname"].ToString().Trim() });
                 }
             }
-            cbfd.ItemsSource = list;
-            cbfd.SelectedValuePath = "FDCode";
-            cbfd.DisplayMemberPath = "FDName";
+            cmbfd.ItemsSource = list;
+            cmbfd.SelectedValuePath = "FDCode";
+            cmbfd.DisplayMemberPath = "FDName";
         }
         void GetUser(string fdCode)
         {
@@ -56,9 +56,9 @@ namespace LFZB_PMS
                     list.Add(new UserClass() { UserCode = row["usercode"].ToString().Trim(), UserName = row["username"].ToString().Trim() });
                 }
             }
-            cbCode.ItemsSource = list;
-            cbCode.SelectedValuePath = "UserCode";
-            cbCode.DisplayMemberPath = "UserName";
+            cmbCode.ItemsSource = list;
+            cmbCode.SelectedValuePath = "UserCode";
+            cmbCode.DisplayMemberPath = "UserName";
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -69,19 +69,19 @@ namespace LFZB_PMS
         private void cbfd_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string code = "";
-            if (cbfd.SelectedItem != null)
-                code = cbfd.SelectedValue.ToString();
+            if (cmbfd.SelectedItem != null)
+                code = cmbfd.SelectedValue.ToString();
             GetUser(code);
         }
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
             string fdCode = "";
-            if (cbfd.SelectedItem!= null)
-            fdCode = cbfd.SelectedValue.ToString();
-            string userCode = cbCode.Text.Trim();
-            if (cbCode.SelectedItem != null)
-                userCode = cbCode.SelectedValue.ToString();
+            if (cmbfd.SelectedItem!= null)
+            fdCode = cmbfd.SelectedValue.ToString();
+            string userCode = cmbCode.Text.Trim();
+            if (cmbCode.SelectedItem != null)
+                userCode = cmbCode.SelectedValue.ToString();
             string pw = pwPassword.Password;
             if (userDal.Login(fdCode, userCode, pw))
             {
