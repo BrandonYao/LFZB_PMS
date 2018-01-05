@@ -79,13 +79,16 @@ namespace LFZB_PMS
         private void gyswh_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             RoutedUICommand cmd = (RoutedUICommand)e.Command;
-            UCGYSWH uc = new UCGYSWH();
-            uc.UCClose += new UCGYSWH.HandleClose(ItemClose);
+            UCGYS uc = new UCGYS();
+            uc.UCClose += new UCGYS.HandleClose(ItemClose);
             ShowUC(uc, cmd.Text);
         }
         private void fxswh_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            RoutedUICommand cmd = (RoutedUICommand)e.Command;
+            UCFXS uc = new UCFXS();
+            uc.UCClose += new UCFXS.HandleClose(ItemClose);
+            ShowUC(uc, cmd.Text);
         }
         private void ssppwh_Executed(object sender, ExecutedRoutedEventArgs e)
         {
@@ -516,7 +519,10 @@ namespace LFZB_PMS
 
         private void xtcs_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            RoutedUICommand cmd = (RoutedUICommand)e.Command;
+            UCXTCS uc = new UCXTCS();
+            //uc.UCClose += new UCGYS.HandleClose(ItemClose);
+            ShowUC(uc, cmd.Text);
         }
 
         private void bdcs_Executed(object sender, ExecutedRoutedEventArgs e)

@@ -28,20 +28,22 @@ namespace LFZB_PMS.DB
         public bool Run(string sql)
         {
             //打开连接
-            MySqlConnection con = new MySqlConnection(ConnectionString);
-            con.Open();
-            //命令
-            MySqlCommand com = new MySqlCommand(sql, con);
-            int i = com.ExecuteNonQuery();
-            if (i > 0)
+            using (MySqlConnection con = new MySqlConnection(ConnectionString))
             {
-                con.Close();//关闭连接 
-                return true;
-            }
-            else
-            {
-                con.Close();//关闭连接 
-                return false;
+                con.Open();
+                //命令
+                MySqlCommand com = new MySqlCommand(sql, con);
+                int i = com.ExecuteNonQuery();
+                if (i > 0)
+                {
+                    con.Close();//关闭连接 
+                    return true;
+                }
+                else
+                {
+                    con.Close();//关闭连接 
+                    return false;
+                }
             }
         }
 
@@ -54,34 +56,43 @@ namespace LFZB_PMS.DB
         public DataSet DS(string sql)
         {
             //打开连接
-            MySqlConnection con = new MySqlConnection(ConnectionString);
-            con.Open();
-            //命令
-            MySqlCommand com = new MySqlCommand(sql, con);
-            //处理
-            MySqlDataAdapter sd = new MySqlDataAdapter(com);
-            //数据集
-            DataSet ds = new DataSet();
-            //填充
-            sd.Fill(ds);
-            con.Close();//关闭连接  
-            return ds;
-        }
-
-        /// <summary>
-        /// 执行增、删、改
-        /// </summary>
-        /// <param name="strSql"></param>
-        public int ExecDataBySql(string strSql, params MySqlParameter[] param)
-        {
             using (MySqlConnection con = new MySqlConnection(ConnectionString))
             {
-                //打开连接
                 con.Open();
                 //命令
-                MySqlCommand com = new MySqlCommand(strSql, con);
-                com.Parameters.AddRange(param);
-                return com.ExecuteNonQuery();
+                MySqlCommand com = new MySqlCommand(sql, con);
+                //处理
+                MySqlDataAdapter sd = new MySqlDataAdapter(com);
+                //数据集
+                DataSet ds = new DataSet();
+                //填充
+                sd.Fill(ds);
+                con.Close();//关闭连接  
+                return ds;
+            }
+        }
+
+        public DataSet DS_Procedure(string procedureName, IDictionary<string, string> Parameters)
+        {
+            using (MySqlConnection sqlConnection = new MySqlConnection(ConnectionString))
+            {
+                MySqlCommand mysqlcom = new MySqlCommand(procedureName, sqlConnection);
+                mysqlcom.CommandType = CommandType.StoredProcedure;//设置调用的类型为存储过程   
+                DataSet ds = new DataSet();
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+                if (Parameters != null)
+                {
+                    foreach (string k in Parameters.Keys)
+                    {
+                        mysqlcom.Parameters.Add(k, MySqlDbType.VarChar, 20).Value = Parameters[k];
+                    }
+                }
+                sqlConnection.Open();//打开数据库连接 
+                adapter.SelectCommand = mysqlcom;
+                mysqlcom.ExecuteNonQuery();
+                adapter.Fill(ds, procedureName);
+                return ds;
             }
         }
     }

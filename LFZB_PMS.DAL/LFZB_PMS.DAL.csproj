@@ -43,7 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FDDAL.cs" />
+    <Compile Include="ConfigDAL.cs" />
+    <Compile Include="FXSDAL.cs" />
     <Compile Include="GYSDAL.cs" />
     <Compile Include="MessageDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

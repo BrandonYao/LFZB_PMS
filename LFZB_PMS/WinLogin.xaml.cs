@@ -12,8 +12,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using static LFZB_PMS.WinFD;
-using static LFZB_PMS.WinUser;
+using static LFZB_PMS.DAL.FXSDAL;
+using static LFZB_PMS.UCFXS;
+using static LFZB_PMS.UCUser;
 
 namespace LFZB_PMS
 {
@@ -22,7 +23,7 @@ namespace LFZB_PMS
     /// </summary>
     public partial class WinLogin : Window
     {
-        DAL.FDDAL fdDal = new DAL.FDDAL(Config.Connection.Server);
+        DAL.FXSDAL fxsDal = new DAL.FXSDAL(Config.Connection.Server);
         DAL.UserDAL userDal = new DAL.UserDAL(Config.Connection.Server);
         DAL.MessageDAL msgDal = new DAL.MessageDAL();
 
@@ -30,25 +31,25 @@ namespace LFZB_PMS
         {
             InitializeComponent();
         }
-        void GetFD()
+        void GetFXS()
         {
-            IList<FDClass> list = new List<FDClass>();
-            DataTable dt = fdDal.GetFDInfo();
+            IList<FXSClass> list = new List<FXSClass>();
+            DataTable dt = fxsDal.GetFXSInfo();
             if (dt != null && dt.Rows.Count != 0)
             {
                 foreach (DataRow row in dt.Rows)
                 {
-                    list.Add(new FDClass() { FDCode = row["fdcode"].ToString().Trim(), FDName = row["fdname"].ToString().Trim() });
+                    list.Add(new FXSClass() { FXSCode = row["fxscode"].ToString().Trim(), FXSName = row["fxsname"].ToString().Trim() });
                 }
             }
-            cmbfd.ItemsSource = list;
-            cmbfd.SelectedValuePath = "FDCode";
-            cmbfd.DisplayMemberPath = "FDName";
+            cmbfxs.ItemsSource = list;
+            cmbfxs.SelectedValuePath = "FXSCode";
+            cmbfxs.DisplayMemberPath = "FXSName";
         }
-        void GetUser(string fdCode)
+        void GetUser(string fxsCode)
         {
             IList<UserClass> list = new List<UserClass>();
-            DataTable dt = userDal.GetUser(fdCode);
+            DataTable dt = userDal.GetUser(fxsCode);
             if (dt != null && dt.Rows.Count != 0)
             {
                 foreach (DataRow row in dt.Rows)
@@ -63,22 +64,22 @@ namespace LFZB_PMS
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            GetFD();
+            GetFXS();
         }
 
         private void cbfd_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string code = "";
-            if (cmbfd.SelectedItem != null)
-                code = cmbfd.SelectedValue.ToString();
+            if (cmbfxs.SelectedItem != null)
+                code = cmbfxs.SelectedValue.ToString();
             GetUser(code);
         }
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
             string fdCode = "";
-            if (cmbfd.SelectedItem!= null)
-            fdCode = cmbfd.SelectedValue.ToString();
+            if (cmbfxs.SelectedItem!= null)
+            fdCode = cmbfxs.SelectedValue.ToString();
             string userCode = cmbCode.Text.Trim();
             if (cmbCode.SelectedItem != null)
                 userCode = cmbCode.SelectedValue.ToString();

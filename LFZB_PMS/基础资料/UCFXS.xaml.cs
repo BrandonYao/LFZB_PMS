@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -14,113 +13,83 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using static LFZB_PMS.DAL.GYSDAL;
+using static LFZB_PMS.DAL.FXSDAL;
 
 namespace LFZB_PMS
 {
     /// <summary>
-    /// UCGYSWH.xaml 的交互逻辑
+    /// UCFD.xaml 的交互逻辑
     /// </summary>
-    public partial class UCGYSWH : UserControl
+    public partial class UCFXS : UserControl
     {
-        DAL.GYSDAL gysDal = new DAL.GYSDAL(Config.Connection.Server);
+        DAL.FXSDAL fxsDal = new DAL.FXSDAL(Config.Connection.Server);
         DAL.MessageDAL msgDal = new DAL.MessageDAL();
 
         public delegate void HandleClose();
         public HandleClose UCClose;
-        public UCGYSWH()
+        public UCFXS()
         {
             InitializeComponent();
-            BindGYSZ();
-            BindZYCP();
+            BindFXLX();
         }
 
-        #region 供应商类型
-        public class GYSType
+        #region 分销商类型
+        public class FXSType
         {
             /// <summary>
-            /// 供应商类型编号
+            /// 分销商分组编号
             /// </summary>
-            public string GYSZCode { get; set; }
+            public string FXSZCode { get; set; }
             /// <summary>
-            /// 供应商类型名称
+            /// 分销商分组名称
             /// </summary>
-            public string GYSZName { get; set; }
+            public string FXSZName { get; set; }
             /// <summary>
-            /// 主营产品编号
+            /// 分销类型编号
             /// </summary>
-            public string ZYCPCode { get; set; }
+            public string FXLXCode { get; set; }
             /// <summary>
-            /// 主营产品名称
+            /// 分销类型名称
             /// </summary>
-            public string ZYCPName { get; set; }
+            public string FXLXName { get; set; }
             /// <summary>
             /// 数量
             /// </summary>
-            public string GYSCount { get; set; }
+            public string FXSCount { get; set; }
         }
         #endregion
 
         #region 数据源
-        public class GYSZ
+        public class FXLX
         {
             /// <summary>
-            /// 供应商类型编号
+            /// 分销类型编号
             /// </summary>
-            public string GYSZCode { get; set; }
+            public string FXLXCode { get; set; }
             /// <summary>
-            /// 供应商类型名称
+            /// 分销类型名称
             /// </summary>
-            public string GYSZName { get; set; }
+            public string FXLXName { get; set; }
         }
-        public class ZYCP
-        {
-            /// <summary>
-            /// 主营产品编号
-            /// </summary>
-            public string ZYCPCode { get; set; }
-            /// <summary>
-            /// 主营产品名称
-            /// </summary>
-            public string ZYCPName { get; set; }
-        }
-        private IList<GYSZ> gyszList = new List<GYSZ>();
-        public IList<GYSZ> GYSZList { get { return gyszList; } set { gyszList = value; } }
 
-        private IList<ZYCP> zycpList = new List<ZYCP>();
-        public IList<ZYCP> ZYCPList { get { return zycpList; } set { zycpList = value; } }
+        private IList<FXLX> fxlxList = new List<FXLX>();
+        public IList<FXLX> FXLXList { get { return fxlxList; } set { fxlxList = value; } }
 
-        void BindGYSZ()
+        void BindFXLX()
         {
-            DataTable dt = gysDal.GetGYSZ();
+            DataTable dt = fxsDal.GetFXLX();
             if (dt != null && dt.Rows.Count != 0)
             {
                 foreach (DataRow row in dt.Rows)
                 {
-                    gyszList.Add(new GYSZ()
+                    fxlxList.Add(new FXLX()
                     {
-                        GYSZCode = row["gyszcode"].ToString().Trim(),
-                        GYSZName = row["gyszname"].ToString().Trim()
+                        FXLXCode = row["fxlxcode"].ToString().Trim(),
+                        FXLXName = row["fxlxname"].ToString().Trim()
                     });
                 }
             }
-            cmbgysz.ItemsSource = gyszList; cmbgysz.SelectedValuePath = "GYSZCode"; cmbgysz.DisplayMemberPath = "GYSZName";
-        }
-        void BindZYCP()
-        {
-            DataTable dt = gysDal.GetZYCP();
-            if (dt != null && dt.Rows.Count != 0)
-            {
-                foreach (DataRow row in dt.Rows)
-                {
-                    zycpList.Add(new ZYCP()
-                    {
-                        ZYCPCode = row["zycpcode"].ToString().Trim(),
-                        ZYCPName = row["zycpname"].ToString().Trim()
-                    });
-                }
-            }
-            cmbzycp.ItemsSource = zycpList; cmbzycp.SelectedValuePath = "ZYCPCode"; cmbzycp.DisplayMemberPath = "ZYCPName";
+            cmbfxlx.ItemsSource = fxlxList; cmbfxlx.SelectedValuePath = "FXLXCode"; cmbfxlx.DisplayMemberPath = "FXLXName";
         }
 
         public class SearchItem
@@ -131,7 +100,7 @@ namespace LFZB_PMS
         void BindSearch()
         {
             IList<SearchItem> list = new List<SearchItem>();
-            list.Add(new SearchItem() { Column = "gysname", Text = "供应商名称" });
+            list.Add(new SearchItem() { Column = "gysname", Text = "分销商名称" });
             list.Add(new SearchItem() { Column = "lxr", Text = "联系人" });
             cmbSearch.ItemsSource = list; cmbSearch.SelectedValuePath = "Column"; cmbSearch.DisplayMemberPath = "Text";
         }
@@ -139,17 +108,19 @@ namespace LFZB_PMS
 
         void ShowType()
         {
-            IList<GYSType> list = new List<GYSType>();
-            DataTable dt = gysDal.GetGYSType();
+            IList<FXSType> list = new List<FXSType>();
+            DataTable dt = fxsDal.GetFXSType();
             if (dt != null && dt.Rows.Count != 0)
             {
                 foreach (DataRow row in dt.Rows)
                 {
-                    list.Add(new GYSType() { GYSZCode = row["gyszcode"].ToString().Trim(),
-                        GYSZName = row["gyszname"].ToString().Trim(),
-                        ZYCPCode = row["zycpcode"].ToString().Trim(),
-                        ZYCPName = row["zycpname"].ToString().Trim(),
-                        GYSCount = row["gyscount"].ToString().Trim()
+                    list.Add(new FXSType()
+                    {
+                        FXSZCode = row["fxszcode"].ToString().Trim(),
+                        FXSZName = row["fxszname"].ToString().Trim(),
+                        FXLXCode = row["fxlxcode"].ToString().Trim(),
+                        FXLXName = row["fxlxname"].ToString().Trim(),
+                        FXSCount = row["fxscount"].ToString().Trim()
                     });
                 }
             }
@@ -157,13 +128,13 @@ namespace LFZB_PMS
             dgType.ItemsSource = list;
 
             if (list.Count > 0)
-                ShowData(list[0].GYSZCode, list[0].ZYCPCode);
+                ShowData(list[0].FXSZCode, list[0].FXLXCode);
         }
-        public IList<GYSClass> GYSList = new List<GYSClass>();
-        void ShowData(string gyszCode, string zycpCode)
+        public IList<FXSClass> FXSList = new List<FXSClass>();
+        void ShowData(string fxszCode, string fxlxCode)
         {
-            GYSList.Clear();
-            DataTable dt = gysDal.GetGYSList(gyszCode, zycpCode);
+            FXSList.Clear();
+            DataTable dt = fxsDal.GetFXSList(fxszCode, fxlxCode);
             DataTableToList(dt);
             ShowList();
         }
@@ -173,14 +144,14 @@ namespace LFZB_PMS
             {
                 foreach (DataRow row in dt.Rows)
                 {
-                    GYSList.Add(new GYSClass()
+                    FXSList.Add(new FXSClass()
                     {
-                        GYSZCode = row["gyszcode"].ToString().Trim(),
-                        GYSZName = row["gyszname"].ToString().Trim(),
-                        ZYCPCode = row["zycpcode"].ToString().Trim(),
-                        ZYCPName = row["zycpname"].ToString().Trim(),
-                        GYSCode = row["gyscode"].ToString().Trim(),
-                        GYSName = row["gysname"].ToString().Trim(),
+                        FXSZCode = row["fxszcode"].ToString().Trim(),
+                        FXSZName = row["fxszname"].ToString().Trim(),
+                        FXLXCode = row["fxlxcode"].ToString().Trim(),
+                        FXLXName = row["fxlxname"].ToString().Trim(),
+                        FXSCode = row["fxscode"].ToString().Trim(),
+                        FXSName = row["fxsname"].ToString().Trim(),
                         LXDZ = row["LXDZ"].ToString().Trim(),
                         LXR = row["LXR"].ToString().Trim(),
                         YZBM = row["YZBM"].ToString().Trim(),
@@ -202,11 +173,11 @@ namespace LFZB_PMS
         void ShowList()
         {
             dgData.ItemsSource = null;
-            dgData.ItemsSource = GYSList;
+            dgData.ItemsSource = FXSList;
             if (gdData.DataContext != null)
             {
-                GYSClass gys = gdData.DataContext as GYSClass;
-                if (!GYSList.Contains(gys)) gdData.DataContext = null;
+                FXSClass gys = gdData.DataContext as FXSClass;
+                if (!FXSList.Contains(gys)) gdData.DataContext = null;
             }
         }
         void CheckSave()
@@ -218,23 +189,23 @@ namespace LFZB_PMS
         }
         void SaveList()
         {
-            foreach (GYSClass gys in GYSList)
+            foreach (FXSClass fxs in FXSList)
             {
-                if (gys.IsDirty)
+                if (fxs.IsDirty)
                 {
-                    if (string.IsNullOrEmpty(gys.GYSCode))
-                        gysDal.InsertData(gys, Data.UserCode);
+                    if (string.IsNullOrEmpty(fxs.FXSCode))
+                        fxsDal.InsertData(fxs, Data.UserCode);
                     else
-                        gysDal.UpdateData(gys, Data.UserCode);
-                    gys.IsDirty = false;
+                        fxsDal.UpdateData(fxs, Data.UserCode);
+                    fxs.IsDirty = false;
                 }
             }
             ShowList();
         }
         void SearchData(string column, string value)
         {
-            GYSList.Clear();
-            DataTable dt = gysDal.Search(column, value);
+            FXSList.Clear();
+            DataTable dt = fxsDal.Search(column, value);
             DataTableToList(dt);
             ShowList();
         }
@@ -254,15 +225,15 @@ namespace LFZB_PMS
             if (dgType.SelectedItem != null)
             {
                 CheckSave();
-                GYSType gt = dgType.SelectedItem as GYSType;
-                ShowData(gt.GYSZCode, gt.ZYCPCode);
+                FXSType gt = dgType.SelectedItem as FXSType;
+                ShowData(gt.FXSZCode, gt.FXLXCode);
             }
         }
         private void dgData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (dgData.SelectedItem != null)
             {
-                GYSClass gys = dgData.SelectedItem as GYSClass;
+                FXSClass gys = dgData.SelectedItem as FXSClass;
                 gdData.DataContext = gys;
             }
         }
@@ -289,8 +260,8 @@ namespace LFZB_PMS
 
         private void Add_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            GYSClass gys = new GYSClass() { IsDirty = true };
-            GYSList.Add(gys);
+            FXSClass gys = new FXSClass() { IsDirty = true };
+            FXSList.Add(gys);
             ShowList();
             gdData.DataContext = gys;
         }
@@ -310,9 +281,9 @@ namespace LFZB_PMS
         }
         private void Del_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            GYSClass gys = dgData.SelectedItem as GYSClass;
-            gysDal.DeleteData(gys.GYSCode);
-            GYSList.Remove(gys);
+            FXSClass gys = dgData.SelectedItem as FXSClass;
+            fxsDal.DeleteData(gys.FXSCode);
+            FXSList.Remove(gys);
             ShowList();
         }
         private void Del_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -322,13 +293,13 @@ namespace LFZB_PMS
 
         private void Cancle_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            IList<GYSClass> list = dgData.ItemsSource as IList<GYSClass>;
+            IList<FXSClass> list = dgData.ItemsSource as IList<FXSClass>;
         }
         bool boolCancle = false;
         private void Cancle_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             bool can = false;
-            foreach (GYSClass gys in GYSList)
+            foreach (FXSClass gys in FXSList)
             {
                 if (gys.IsDirty)
                 {
@@ -355,7 +326,7 @@ namespace LFZB_PMS
         private void Print_Execute(object sender, CanExecuteRoutedEventArgs e)
         {
             bool can = true;
-            foreach (GYSClass gys in GYSList)
+            foreach (FXSClass gys in FXSList)
             {
                 if (gys.IsDirty)
                 {
@@ -363,7 +334,7 @@ namespace LFZB_PMS
                     break;
                 }
             }
-            boolPrint = can && GYSList.Count > 0;
+            boolPrint = can && FXSList.Count > 0;
 
             e.CanExecute = boolPrint;
         }
@@ -394,34 +365,29 @@ namespace LFZB_PMS
 
         private void gys_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            //int i = KeyInterop.VirtualKeyFromKey((System.Windows.Input.Key)e.ImeProcessedKey);
-            //if ((i >= 48 && i <= 57) || (i >= 96 && i <= 105) || (i >= 65 && i <= 90) || i == 8 || i == 46)
-
             if (gdData.DataContext != null)
             {
-                GYSClass gys = gdData.DataContext as GYSClass;
+                FXSClass gys = gdData.DataContext as FXSClass;
                 gys.IsDirty = true;
                 ShowList();
             }
-            
+
             e.Handled = true;
         }
-
         private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
             if (gdData.DataContext != null)
             {
-                GYSClass gys = gdData.DataContext as GYSClass;
+                FXSClass gys = gdData.DataContext as FXSClass;
                 gys.IsDirty = true;
                 ShowList();
             }
         }
-
         private void cmb_DropDownClosed(object sender, EventArgs e)
         {
             if (gdData.DataContext != null)
             {
-                GYSClass gys = gdData.DataContext as GYSClass;
+                FXSClass gys = gdData.DataContext as FXSClass;
                 gys.IsDirty = true;
                 ShowList();
             }

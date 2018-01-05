@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace LFZB_PMS
 {
     /// <summary>
-    /// WinUser.xaml 的交互逻辑
+    /// UCUser.xaml 的交互逻辑
     /// </summary>
-    public partial class WinUser : Window
+    public partial class UCUser : UserControl
     {
-        public WinUser()
+        public UCUser()
         {
             InitializeComponent();
         }

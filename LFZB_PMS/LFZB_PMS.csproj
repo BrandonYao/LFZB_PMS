@@ -57,7 +57,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Class\Converter.cs" />
+    <Compile Include="Class\BoolConverter.cs" />
+    <Compile Include="Class\ColorConverter.cs" />
     <Compile Include="Class\Config.cs" />
     <Compile Include="Class\Data.cs" />
     <Compile Include="Command\BaseCmd.cs" />
@@ -65,12 +66,17 @@
     <Compile Include="WinLogin.xaml.cs">
       <DependentUpon>WinLogin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="基础资料\UCGYSWH.xaml.cs">
-      <DependentUpon>UCGYSWH.xaml</DependentUpon>
+    <Compile Include="基础资料\UCFXS.xaml.cs">
+      <DependentUpon>UCFXS.xaml</DependentUpon>
     </Compile>
-    <Compile Include="基础资料\WinFD.xaml.cs" />
-    <Compile Include="系统维护\WinUser.xaml.cs">
-      <DependentUpon>WinUser.xaml</DependentUpon>
+    <Compile Include="基础资料\UCGYS.xaml.cs">
+      <DependentUpon>UCGYS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="系统维护\UCUser.xaml.cs">
+      <DependentUpon>UCUser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="系统维护\UCXTCS.xaml.cs">
+      <DependentUpon>UCXTCS.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -88,19 +94,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\TabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WinLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="基础资料\UCGYSWH.xaml">
+    <Page Include="基础资料\UCFXS.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="基础资料\WinFD.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="基础资料\UCGYS.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="系统维护\WinUser.xaml">
+    <Page Include="系统维护\UCUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="系统维护\UCXTCS.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

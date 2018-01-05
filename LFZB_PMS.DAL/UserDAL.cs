@@ -14,26 +14,26 @@ namespace LFZB_PMS.DAL
         {
             mySql = new DB.MySqlDB(connStr);
         }
-        public DataTable GetUser(string fdCode)
+        public DataTable GetUser(string fxsCode)
         {
-            string sql = string.Format("select * from sys_user where fdcode={0} and userstate=1", fdCode);
+            string sql = string.Format("select * from sys_user where fxscode={0} and userstate=1", fxsCode);
             DataSet ds = mySql.DS(sql);
             return ds.Tables[0];
         }
-        public bool Login(string fdCode, string userCode, string pw)
+        public bool Login(string fxsCode, string userCode, string pw)
         {
             string sql = string.Format("select * from sys_user where usercode='{0}' and password='{1}'", userCode, pw);
-            if (userCode != "admin") sql += string.Format(" and fdcode={0}", fdCode);
+            if (userCode != "admin") sql += string.Format(" and fxscode={0}", fxsCode);
             DataSet ds = mySql.DS(sql);
             if (ds.Tables[0].Rows.Count > 0)
                 return true;
             else return false;
         }
 
-        public Dictionary<string, bool> GetMenu(string fdCode, string userCode)
+        public Dictionary<string, bool> GetMenu(string fxsCode, string userCode)
         {
             Dictionary<string, bool> cmdState = new Dictionary<string, bool>();
-            string sql = string.Format("select * from v_user_menu where fdcode={0} and usercode='{1}'", fdCode, userCode);
+            string sql = string.Format("select * from v_user_menu where fxscode={0} and usercode='{1}'", fxsCode, userCode);
             if (userCode == "admin") sql = "select * from sys_menu";
             DataSet ds = mySql.DS(sql);
             DataTable dt = ds.Tables[0];
