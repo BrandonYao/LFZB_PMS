@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static LFZB_PMS.DAL.FXSDAL;
+using Microsoft..Interop.Excel;
 
 namespace LFZB_PMS
 {
@@ -100,7 +101,7 @@ namespace LFZB_PMS
         void BindSearch()
         {
             IList<SearchItem> list = new List<SearchItem>();
-            list.Add(new SearchItem() { Column = "gysname", Text = "分销商名称" });
+            list.Add(new SearchItem() { Column = "fxsname", Text = "分销商名称" });
             list.Add(new SearchItem() { Column = "lxr", Text = "联系人" });
             cmbSearch.ItemsSource = list; cmbSearch.SelectedValuePath = "Column"; cmbSearch.DisplayMemberPath = "Text";
         }
@@ -162,7 +163,7 @@ namespace LFZB_PMS
                         KHYH = row["KHYH"].ToString().Trim(),
                         YHZH = row["YHZH"].ToString().Trim(),
                         BZ = row["BZ"].ToString().Trim(),
-                        GYSState = int.Parse(row["GYSState"].ToString()),
+                        GYSState = Convert.ToInt32(row["GYSState"]),
                         UserCode = row["UserCode"].ToString().Trim(),
                         UserName = row["UserName"].ToString().Trim(),
                         Date = row["Date"].ToString().Trim(),
@@ -264,6 +265,7 @@ namespace LFZB_PMS
             FXSList.Add(gys);
             ShowList();
             gdData.DataContext = gys;
+            cmbfxlx.SelectedIndex = 0;
         }
         private void Add_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -293,7 +295,6 @@ namespace LFZB_PMS
 
         private void Cancle_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            IList<FXSClass> list = dgData.ItemsSource as IList<FXSClass>;
         }
         bool boolCancle = false;
         private void Cancle_CanExecute(object sender, CanExecuteRoutedEventArgs e)

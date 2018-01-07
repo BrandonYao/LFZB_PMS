@@ -151,7 +151,7 @@
             <TextBlock Text="是否有效：" Grid.Row="9" Grid.Column="4" Style="{StaticResource textBlockStyle}"></TextBlock>
             <CheckBox Grid.Row="9" Grid.Column="5" Margin="3" VerticalAlignment="Center" IsChecked="{Binding GYSState, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" Click="CheckBox_Click"></CheckBox>
         </Grid>
-        <DataGrid Grid.Row="2" Grid.Column="1" Name="dgData" SelectionChanged="dgData_SelectionChanged" ItemsSource="{Binding Path=GYSList, ElementName=this}" LoadingRow="dgData_LoadingRow">
+        <DataGrid Grid.Row="2" Grid.Column="1" Name="dgData" SelectionChanged="dgData_SelectionChanged" LoadingRow="dgData_LoadingRow">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="供应商类型" Binding="{Binding Path=GYSZName}"></DataGridTextColumn>
                 <DataGridTextColumn Header="主营产品" Binding="{Binding Path=ZYCPName}"></DataGridTextColumn>

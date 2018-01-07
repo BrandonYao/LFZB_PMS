@@ -70,7 +70,8 @@ namespace LFZB_PMS
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            cmdState = userDal.GetMenu(Data.FDCode, Data.UserCode);
+            Title = Data.FXSName;
+            cmdState = userDal.GetMenu(Data.FXSCode, Data.UserCode);
         }
 
         Dictionary<string, bool> cmdState = new Dictionary<string, bool>();

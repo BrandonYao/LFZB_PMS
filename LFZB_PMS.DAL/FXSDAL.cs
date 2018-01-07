@@ -47,7 +47,7 @@ namespace LFZB_PMS.DAL
         }
         public void InsertData(FXSClass fxs, string userCode)
         {
-            string sql = string.Format(@"insert into sys_gys (fxsname,fxszcode,fxlxcode,lxdz,lxr,yzbm,lxdh,czhm,email,sjhm,khyh,yhzh,bz,gysstate,usercode,date) values 
+            string sql = string.Format(@"insert into sys_fxs (fxsname,fxszcode,fxlxcode,lxdz,lxr,yzbm,lxdh,czhm,email,sjhm,khyh,yhzh,bz,gysstate,usercode,date) values 
                 ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}',{13},'{14}','{15}')",
                 fxs.FXSName, fxs.FXSZCode, fxs.FXLXCode, fxs.LXDZ, fxs.LXR, fxs.YZBM, fxs.LXDH, fxs.CZHM, fxs.Email, fxs.SJHM, fxs.KHYH, fxs.YHZH, fxs.BZ, fxs.GYSState, userCode, DateTime.Now.ToString());
             mySql.Run(sql);

@@ -293,6 +293,8 @@ namespace LFZB_PMS
             GYSList.Add(gys);
             ShowList();
             gdData.DataContext = gys;
+            cmbgysz.SelectedIndex = 0;
+            cmbzycp.SelectedIndex = 0;
         }
         private void Add_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {

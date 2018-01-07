@@ -77,17 +77,17 @@ namespace LFZB_PMS
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            string fdCode = "";
+            string fxsCode = "";
             if (cmbfxs.SelectedItem!= null)
-            fdCode = cmbfxs.SelectedValue.ToString();
+            fxsCode = cmbfxs.SelectedValue.ToString();
             string userCode = cmbCode.Text.Trim();
             if (cmbCode.SelectedItem != null)
                 userCode = cmbCode.SelectedValue.ToString();
             string pw = pwPassword.Password;
-            if (userDal.Login(fdCode, userCode, pw))
+            if (userDal.Login(fxsCode, userCode, pw))
             {
                 new MainWindow().Show();
-                Data.FDCode = fdCode;
+                Data.FXSCode = fxsCode;
                 Data.UserCode = userCode;
             }
             else msgDal.ShowWarning("登陆失败");

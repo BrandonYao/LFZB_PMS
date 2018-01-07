@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
+using static LFZB_PMS.DAL.FXSDAL;
 using static LFZB_PMS.DAL.GYSDAL;
 
 namespace LFZB_PMS
@@ -21,6 +22,11 @@ namespace LFZB_PMS
                 case "LFZB_PMS.DAL.GYSDAL+GYSClass":
                     GYSClass gys = value as GYSClass;
                     if (gys.IsDirty) c = Colors.LightCoral;
+                    else c = Colors.LightGreen;
+                    break;
+                case "LFZB_PMS.DAL.FXSDAL+FXSClass":
+                    FXSClass fxs = value as FXSClass;
+                    if (fxs.IsDirty) c = Colors.LightCoral;
                     else c = Colors.LightGreen;
                     break;
             }

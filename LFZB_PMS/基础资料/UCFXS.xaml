@@ -49,9 +49,9 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <DataGrid Grid.RowSpan="3" Name="dgType" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" SelectionChanged="dgType_SelectionChanged" AlternationCount="2">
+        <DataGrid Grid.RowSpan="3" Name="dgType" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" SelectionChanged="dgType_SelectionChanged" AlternationCount="2" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="分销商分组" Binding="{Binding Path=FXSZName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="分销商分组" Binding="{Binding Path=FXSZCode}"></DataGridTextColumn>
                 <DataGridTextColumn Header="分销类型" Binding="{Binding Path=FXLXName}"></DataGridTextColumn>
                 <DataGridTextColumn Header="数量" Binding="{Binding Path=FXSCount}"></DataGridTextColumn>
             </DataGrid.Columns>
@@ -151,11 +151,11 @@
             <TextBlock Text="是否有效：" Grid.Row="9" Grid.Column="4" Style="{StaticResource textBlockStyle}"></TextBlock>
             <CheckBox Grid.Row="9" Grid.Column="5" Margin="3" VerticalAlignment="Center" IsChecked="{Binding GYSState, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" Click="CheckBox_Click"></CheckBox>
         </Grid>
-        <DataGrid Grid.Row="2" Grid.Column="1" Name="dgData" SelectionChanged="dgData_SelectionChanged" ItemsSource="{Binding Path=GYSList, ElementName=this}" LoadingRow="dgData_LoadingRow">
+        <DataGrid Grid.Row="2" Grid.Column="1" Name="dgData" SelectionChanged="dgData_SelectionChanged" LoadingRow="dgData_LoadingRow">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="供应商类型" Binding="{Binding Path=GYSZName}"></DataGridTextColumn>
-                <DataGridTextColumn Header="主营产品" Binding="{Binding Path=ZYCPName}"></DataGridTextColumn>
-                <DataGridTextColumn Header="供应商名称" Binding="{Binding Path=GYSName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="分销商分组" Binding="{Binding Path=FXSZCode}"></DataGridTextColumn>
+                <DataGridTextColumn Header="分销类型" Binding="{Binding Path=FXLXName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="分销商名称" Binding="{Binding Path=FXSName}"></DataGridTextColumn>
                 <DataGridTextColumn Header="联系地址" Binding="{Binding Path=LXDZ}"></DataGridTextColumn>
                 <DataGridTextColumn Header="联系人" Binding="{Binding Path=LXR}"></DataGridTextColumn>
                 <DataGridTextColumn Header="邮政编码" Binding="{Binding Path=YZBM}"></DataGridTextColumn>
