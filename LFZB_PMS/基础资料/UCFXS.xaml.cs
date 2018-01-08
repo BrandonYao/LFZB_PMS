@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static LFZB_PMS.DAL.FXSDAL;
-using Microsoft..Interop.Excel;
+
 
 namespace LFZB_PMS
 {
@@ -341,6 +341,11 @@ namespace LFZB_PMS
         }
         private void Export_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            DAL.ExcelDAL.ExportToExcel<FXSClass, List<FXSClass>> exporttoexcel =
+                new DAL.ExcelDAL.ExportToExcel<FXSClass, List<FXSClass>>();
+            //实例化exporttoexcel对象
+            exporttoexcel.DataToPrint = (List<FXSClass>)dgData.ItemsSource;
+            exporttoexcel.GenerateReport();
         }
         private void Export_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {

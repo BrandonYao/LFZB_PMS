@@ -58,6 +58,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Class\BoolConverter.cs" />
+    <Compile Include="Class\Calculation.cs" />
     <Compile Include="Class\ColorConverter.cs" />
     <Compile Include="Class\Config.cs" />
     <Compile Include="Class\Data.cs" />
