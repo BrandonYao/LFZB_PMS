@@ -27,7 +27,7 @@ namespace LFZB_PMS.DAL
             DataSet ds = mySql.DS(sql);
             return ds.Tables[0];
         }
-        public DataTable GetFXSList(string fxszCode, string fxlxCode)
+        public DataTable GetList(string fxszCode, string fxlxCode)
         {
             string sql = string.Format("select * from v_fxs where fxszcode='{0}' and fxlxcode='{1}'", fxszCode, fxlxCode);
             DataSet ds = mySql.DS(sql);
@@ -45,23 +45,29 @@ namespace LFZB_PMS.DAL
             DataSet ds = mySql.DS(sql);
             return ds.Tables[0];
         }
+        public DataTable GetZLFS()
+        {
+            string sql = string.Format("select * from base_zlfs");
+            DataSet ds = mySql.DS(sql);
+            return ds.Tables[0];
+        }
         public void InsertData(FXSClass fxs, string userCode)
         {
-            string sql = string.Format(@"insert into sys_fxs (fxsname,fxszcode,fxlxcode,lxdz,lxr,yzbm,lxdh,czhm,email,sjhm,khyh,yhzh,bz,gysstate,usercode,date) values 
-                ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}',{13},'{14}','{15}')",
-                fxs.FXSName, fxs.FXSZCode, fxs.FXLXCode, fxs.LXDZ, fxs.LXR, fxs.YZBM, fxs.LXDH, fxs.CZHM, fxs.Email, fxs.SJHM, fxs.KHYH, fxs.YHZH, fxs.BZ, fxs.GYSState, userCode, DateTime.Now.ToString());
+            string sql = string.Format(@"insert into sys_fxs (fxsname,fxszcode,fxlxcode,lxdz,lxr,yzbm,lxdh,czhm,email,sjhm,khyh,yhzh,bz,state,usercode,date,canxgjj,canxggf,canxgzsdj,canhydxyh,candrtc,xsjjglpp,jljjglpp,jchsbxgz,zlfscode) values 
+                ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}',{13},'{14}','{15}',{16},{17},{18},{19},{20},{21},{22},{23},{24})",
+                fxs.FXSName, fxs.FXSZCode, fxs.FXLXCode, fxs.LXDZ, fxs.LXR, fxs.YZBM, fxs.LXDH, fxs.CZHM, fxs.Email, fxs.SJHM, fxs.KHYH, fxs.YHZH, fxs.BZ, fxs.State, userCode, DateTime.Now.ToString(),fxs.CanXGJJ,fxs.CanXGGF,fxs.CanXGZSDJ,fxs.CanHYDXYH,fxs.CanDRTC,fxs.XSJJGLPP,fxs.JLJJGLPP,fxs.JCHSBXGZ,fxs.ZLFSCode);
             mySql.Run(sql);
         }
         public void UpdateData(FXSClass fxs, string userCode)
         {
             string sql = string.Format(@"update sys_fxs set fxsname='{0}',fxszcode='{1}',fxlxcode='{2}',lxdz='{3}',lxr='{4}',yzbm='{5}',lxdh='{6}',czhm='{7}',
-email='{8}',sjhm='{9}',khyh='{10}',yhzh='{11}',bz='{12}',gysstate={13},usercode='{14}',date='{15}' where fxscode='{16}'",
-                   fxs.FXSName, fxs.FXSZCode, fxs.FXLXCode, fxs.LXDZ, fxs.LXR, fxs.YZBM, fxs.LXDH, fxs.CZHM, fxs.Email, fxs.SJHM, fxs.KHYH, fxs.YHZH, fxs.BZ, fxs.GYSState, userCode, DateTime.Now.ToString(), fxs.FXSCode);
+email='{8}',sjhm='{9}',khyh='{10}',yhzh='{11}',bz='{12}',state={13},usercode='{14}',date='{15}',canxgjj={17},canxggf={18},canxgzsdj={19},canhydxyh={20},candrtc={21},xsjjglpp={22},jljjglpp={23},jchsbxgz={24},zlfscode={25} where fxscode='{16}'",
+                   fxs.FXSName, fxs.FXSZCode, fxs.FXLXCode, fxs.LXDZ, fxs.LXR, fxs.YZBM, fxs.LXDH, fxs.CZHM, fxs.Email, fxs.SJHM, fxs.KHYH, fxs.YHZH, fxs.BZ, fxs.State, userCode, DateTime.Now.ToString(), fxs.FXSCode, fxs.CanXGJJ,fxs.CanXGGF,fxs.CanXGZSDJ,fxs.CanHYDXYH,fxs.CanDRTC,fxs.XSJJGLPP,fxs.JLJJGLPP,fxs.JCHSBXGZ,fxs.ZLFSCode);
             mySql.Run(sql);
         }
         public void DeleteData(string fxsCode)
         {
-            string sql = string.Format(@"delete from sys_fxs where fxscode='{0}'", fxsCode);
+            string sql = string.Format(@"update sys_fxs set del=1 where fxscode='{0}'", fxsCode);
             mySql.Run(sql);
         }
         public DataTable Search(string column, string value)
@@ -156,8 +162,58 @@ email='{8}',sjhm='{9}',khyh='{10}',yhzh='{11}',bz='{12}',gysstate={13},usercode=
             /// <summary>
             /// 是否有效
             /// </summary>
-            public int GYSState { get { return gysState; } set { gysState = value; OnPropertyChanged(new PropertyChangedEventArgs("GYSState")); } }
-            private int gysState;
+            public int State { get { return state; } set { state = value; OnPropertyChanged(new PropertyChangedEventArgs("State")); } }
+            private int state;
+            /// <summary>
+            /// 是否允许修改金价
+            /// </summary>
+            public int CanXGJJ { get { return canxgjj; } set { canxgjj = value; OnPropertyChanged(new PropertyChangedEventArgs("CanXGJJ")); } }
+            private int canxgjj;
+            /// <summary>
+            /// 是否允许修改工费
+            /// </summary>
+            public int CanXGGF { get { return canxggf; } set { canxggf = value; OnPropertyChanged(new PropertyChangedEventArgs("CanXGGF")); } }
+            private int canxggf;
+            /// <summary>
+            /// 是否允许修改主石单价
+            /// </summary>
+            public int CanXGZSDJ { get { return canxgzsdj; } set { canxgzsdj = value; OnPropertyChanged(new PropertyChangedEventArgs("CanXGZSDJ")); } }
+            private int canxgzsdj;
+            /// <summary>
+            /// 是否允许会员独享优惠
+            /// </summary>
+            public int CanHYDXYH { get { return canhydxyh; } set { canhydxyh = value; OnPropertyChanged(new PropertyChangedEventArgs("CanHYDXYH")); } }
+            private int canhydxyh;
+            /// <summary>
+            /// 是否允许多人提成
+            /// </summary>
+            public int CanDRTC { get { return candrtc; } set { candrtc = value; OnPropertyChanged(new PropertyChangedEventArgs("CanDRTC")); } }
+            private int candrtc;
+            /// <summary>
+            /// 销售金价是否关联品牌
+            /// </summary>
+            public int XSJJGLPP { get { return xsjjglpp; } set { xsjjglpp = value; OnPropertyChanged(new PropertyChangedEventArgs("XSJJGLPP")); } }
+            private int xsjjglpp;
+            /// <summary>
+            /// 旧料金价是否关联品牌
+            /// </summary>
+            public int JLJJGLPP { get { return jljjglpp; } set { jljjglpp = value; OnPropertyChanged(new PropertyChangedEventArgs("JLJJGLPP")); } }
+            private int jljjglpp;
+            /// <summary>
+            /// 进出货时，必选柜组
+            /// </summary>
+            public int JCHSBXGZ { get { return jchsbxgz; } set { jchsbxgz = value; OnPropertyChanged(new PropertyChangedEventArgs("JCHSBXGZ")); } }
+            private int jchsbxgz;
+            /// <summary>
+            /// 重量方式编号
+            /// </summary>
+            public string ZLFSCode { get { return zlfsCode; } set { zlfsCode = value; OnPropertyChanged(new PropertyChangedEventArgs("ZLFSCode")); } }
+            private string zlfsCode;
+            /// <summary>
+            /// 重量方式名称
+            /// </summary>
+            public string ZLFSName { get { return zlfsName; } set { zlfsName = value; OnPropertyChanged(new PropertyChangedEventArgs("ZLFSName")); } }
+            private string zlfsName;
             /// <summary>
             /// 最后修改人账号
             /// </summary>

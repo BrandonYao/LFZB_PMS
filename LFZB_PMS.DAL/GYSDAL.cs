@@ -21,7 +21,7 @@ namespace LFZB_PMS.DAL
             DataSet ds = mySql.DS(sql);
             return ds.Tables[0];
         }
-        public DataTable GetGYSList(string gyszCode, string zycpCode)
+        public DataTable GetList(string gyszCode, string zycpCode)
         {
             string sql = string.Format("select * from v_gys where gyszcode='{0}' and zycpcode='{1}'", gyszCode, zycpCode);
             DataSet ds = mySql.DS(sql);
@@ -41,21 +41,21 @@ namespace LFZB_PMS.DAL
         }
         public void InsertData(GYSClass gys, string userCode)
         {
-            string sql = string.Format(@"insert into base_gys (gysname,gyszcode,zycpcode,lxdz,lxr,yzbm,lxdh,czhm,email,sjhm,khyh,yhzh,bz,gysstate,usercode,date) values 
+            string sql = string.Format(@"insert into base_gys (gysname,gyszcode,zycpcode,lxdz,lxr,yzbm,lxdh,czhm,email,sjhm,khyh,yhzh,bz,state,usercode,date) values 
                 ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}',{13},'{14}','{15}')",
-                gys.GYSName, gys.GYSZCode, gys.ZYCPCode, gys.LXDZ, gys.LXR, gys.YZBM, gys.LXDH, gys.CZHM, gys.Email, gys.SJHM, gys.KHYH, gys.YHZH, gys.BZ, gys.GYSState, userCode, DateTime.Now.ToString());
+                gys.GYSName, gys.GYSZCode, gys.ZYCPCode, gys.LXDZ, gys.LXR, gys.YZBM, gys.LXDH, gys.CZHM, gys.Email, gys.SJHM, gys.KHYH, gys.YHZH, gys.BZ, gys.State, userCode, DateTime.Now.ToString());
             mySql.Run(sql);
         }
         public void UpdateData(GYSClass gys, string userCode)
         {
             string sql = string.Format(@"update base_gys set gysname='{0}',gyszcode='{1}',zycpcode='{2}',lxdz='{3}',lxr='{4}',yzbm='{5}',lxdh='{6}',czhm='{7}',
-email='{8}',sjhm='{9}',khyh='{10}',yhzh='{11}',bz='{12}',gysstate={13},usercode='{14}',date='{15}' where gyscode='{16}'",
-                   gys.GYSName, gys.GYSZCode, gys.ZYCPCode, gys.LXDZ, gys.LXR, gys.YZBM, gys.LXDH, gys.CZHM, gys.Email, gys.SJHM, gys.KHYH, gys.YHZH, gys.BZ, gys.GYSState, userCode, DateTime.Now.ToString(), gys.GYSCode);
+email='{8}',sjhm='{9}',khyh='{10}',yhzh='{11}',bz='{12}',state={13},usercode='{14}',date='{15}' where gyscode='{16}'",
+                   gys.GYSName, gys.GYSZCode, gys.ZYCPCode, gys.LXDZ, gys.LXR, gys.YZBM, gys.LXDH, gys.CZHM, gys.Email, gys.SJHM, gys.KHYH, gys.YHZH, gys.BZ, gys.State, userCode, DateTime.Now.ToString(), gys.GYSCode);
             mySql.Run(sql);
         }
         public void DeleteData(string gysCode)
         {
-            string sql = string.Format(@"delete from base_gys where gyscode='{0}'", gysCode);
+            string sql = string.Format(@"update base_gys set del=1 where gyscode='{0}'", gysCode);
             mySql.Run(sql);
         }
         public DataTable Search(string column, string value)
@@ -150,8 +150,8 @@ email='{8}',sjhm='{9}',khyh='{10}',yhzh='{11}',bz='{12}',gysstate={13},usercode=
             /// <summary>
             /// 是否有效
             /// </summary>
-            public int GYSState { get { return gysState; } set { gysState = value; OnPropertyChanged(new PropertyChangedEventArgs("GYSState")); } }
-            private int gysState;
+            public int State { get { return state; } set { state = value; OnPropertyChanged(new PropertyChangedEventArgs("State")); } }
+            private int state;
             /// <summary>
             /// 最后修改人账号
             /// </summary>

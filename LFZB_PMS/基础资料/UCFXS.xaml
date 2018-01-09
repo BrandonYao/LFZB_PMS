@@ -26,6 +26,12 @@
             <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
             <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         </Style>
+        <Style x:Key="checkBoxStyle" TargetType="CheckBox">
+            <Setter Property="Foreground" Value="Blue"></Setter>
+            <Setter Property="Margin" Value="10,3"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
     </UserControl.Resources>
     <UserControl.CommandBindings>
         <CommandBinding Command="cmd:BaseCmd.cmd_refresh" Executed="Refresh_Executed" CanExecute="Refresh_CanExecute"></CommandBinding>
@@ -61,7 +67,7 @@
                 <Image Source="/LFZB_PMS;component/Images/refresh.png" Margin="2"></Image>
             </Button>
             <Separator></Separator>
-            <TextBlock Text="选择查找条件：" VerticalAlignment="Center" Margin="5"></TextBlock>
+            <TextBlock Text="选择查找条件：" VerticalAlignment="Center" Margin="5" Foreground="Black"></TextBlock>
             <ComboBox Name="cmbSearch" MinWidth="60"></ComboBox>
             <TextBox Name="tbValue" MinWidth="100"></TextBox>
             <Button Command="cmd:BaseCmd.cmd_search" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
@@ -149,9 +155,37 @@
             <TextBlock Text="最后修改时间：" Grid.Row="9" Grid.Column="2" Style="{StaticResource textBlockStyle}"></TextBlock>
             <TextBox Grid.Row="9" Grid.Column="3" Style="{StaticResource textBoxStyle}" IsReadOnly="True" Text="{Binding Path=Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <TextBlock Text="是否有效：" Grid.Row="9" Grid.Column="4" Style="{StaticResource textBlockStyle}"></TextBlock>
-            <CheckBox Grid.Row="9" Grid.Column="5" Margin="3" VerticalAlignment="Center" IsChecked="{Binding GYSState, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" Click="CheckBox_Click"></CheckBox>
+            <CheckBox Grid.Row="9" Grid.Column="5" Margin="3" VerticalAlignment="Center" IsChecked="{Binding State, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" Click="CheckBox_Click"></CheckBox>
+
+            <GroupBox Grid.Column="6" Grid.RowSpan="10" Header="分销商参数设置" Margin="10,5,10,0" Foreground="Blue">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <CheckBox Grid.Row="0" Content="销售单：允许修改金价" Style="{StaticResource checkBoxStyle}" IsChecked="{Binding CanXGJJ, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" Click="CheckBox_Click"></CheckBox>
+                    <CheckBox Grid.Row="1" Content="销售单：允许修改工费" Style="{StaticResource checkBoxStyle}" IsChecked="{Binding CanXGGF, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" Click="CheckBox_Click"></CheckBox>
+                    <CheckBox Grid.Row="2" Content="销售单：允许修改主石单价" Style="{StaticResource checkBoxStyle}" IsChecked="{Binding CanXGZSDJ, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" Click="CheckBox_Click"></CheckBox>
+                    <CheckBox Grid.Row="3" Content="销售单：允许会员独享优惠" Style="{StaticResource checkBoxStyle}" IsChecked="{Binding CanHYDXYH, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" Click="CheckBox_Click"></CheckBox>
+                    <CheckBox Grid.Row="4" Content="销售单：允许多人提成" Style="{StaticResource checkBoxStyle}" IsChecked="{Binding CanDRTC, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" Click="CheckBox_Click"></CheckBox>
+                    <CheckBox Grid.Row="5" Content="销售单：销售金价关联品牌" Style="{StaticResource checkBoxStyle}" IsChecked="{Binding XSJJGXPP, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" Click="CheckBox_Click"></CheckBox>
+                    <CheckBox Grid.Row="6" Content="销售单：旧料金价关联品牌" Style="{StaticResource checkBoxStyle}" IsChecked="{Binding JLJJGLPP, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" Click="CheckBox_Click"></CheckBox>
+                    <CheckBox Grid.Row="7" Content="销售单：进出货时，必选柜组" Style="{StaticResource checkBoxStyle}" IsChecked="{Binding JCHSBXGZ, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" Click="CheckBox_Click"></CheckBox>
+                    <StackPanel Grid.Row="8" Orientation="Horizontal">
+                        <TextBlock Grid.Row="8" Text="旧料回收按克工费重量方式：" VerticalAlignment="Center" Margin="10,0,0,0"></TextBlock>
+                        <ComboBox Name="cmbZLFS" Grid.Row="8" Style="{StaticResource comboBoxStyle}" Width="100" SelectedValue="{Binding Path=ZLFSCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Text="{Binding Path=ZLFSName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DropDownClosed="cmb_DropDownClosed"></ComboBox>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
         </Grid>
-        <DataGrid Grid.Row="2" Grid.Column="1" Name="dgData" SelectionChanged="dgData_SelectionChanged" LoadingRow="dgData_LoadingRow">
+        <DataGrid Grid.Row="2" Grid.Column="1" Name="dgData" SelectionChanged="dgData_SelectionChanged" LoadingRow="dgData_LoadingRow" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="分销商分组" Binding="{Binding Path=FXSZCode}"></DataGridTextColumn>
                 <DataGridTextColumn Header="分销类型" Binding="{Binding Path=FXLXName}"></DataGridTextColumn>
@@ -166,15 +200,72 @@
                 <DataGridTextColumn Header="开户银行" Binding="{Binding Path=KHYH}"></DataGridTextColumn>
                 <DataGridTextColumn Header="银行账户" Binding="{Binding Path=YHZH}"></DataGridTextColumn>
                 <DataGridTextColumn Header="备注" Binding="{Binding Path=BZ}"></DataGridTextColumn>
-                <DataGridTemplateColumn Header="是否有效">
+                <DataGridTemplateColumn Header="允许修改金价">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <CheckBox IsChecked="{Binding GYSState, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"></CheckBox>
+                            <CheckBox IsChecked="{Binding CanXGJJ, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Click="CheckBox_Click"></CheckBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="最后修改人" Binding="{Binding Path=UserName}"></DataGridTextColumn>
-                <DataGridTextColumn Header="最后修改日期" Binding="{Binding Path=Date}"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="允许修改工费">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding CanXGGF, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Click="CheckBox_Click"></CheckBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="允许修改主石单价">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding CanXGZSDJ, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Click="CheckBox_Click"></CheckBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="允许会员独享优惠">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding CanHYDXYH, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Click="CheckBox_Click"></CheckBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="允许多人提成">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding CanDRTC, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Click="CheckBox_Click"></CheckBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="销售金价关联品牌">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding XSJJGLPP, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Click="CheckBox_Click"></CheckBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="旧料金价关联品牌">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding JLJJGLPP, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Click="CheckBox_Click"></CheckBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="进出货时必选柜组">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding JCHSBXGZ, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Click="CheckBox_Click"></CheckBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="重量方式" Binding="{Binding Path=ZLFSName}"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="有效">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding State, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Click="CheckBox_Click"></CheckBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="最后修改人" Binding="{Binding Path=UserName}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="最后修改日期" Binding="{Binding Path=Date}" IsReadOnly="True"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

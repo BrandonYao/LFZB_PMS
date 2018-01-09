@@ -51,6 +51,7 @@
     <Compile Include="GYSDAL.cs" />
     <Compile Include="MessageDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SSPPDAL.cs" />
     <Compile Include="UserDAL.cs" />
   </ItemGroup>
   <ItemGroup>

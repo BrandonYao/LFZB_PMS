@@ -15,7 +15,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static LFZB_PMS.DAL.FXSDAL;
 
-
 namespace LFZB_PMS
 {
     /// <summary>
@@ -32,6 +31,7 @@ namespace LFZB_PMS
         {
             InitializeComponent();
             BindFXLX();
+            BindZLFS();
         }
 
         #region 分销商类型
@@ -72,6 +72,11 @@ namespace LFZB_PMS
             /// </summary>
             public string FXLXName { get; set; }
         }
+        public class ZLFS
+        {
+            public string ZLFSCode { get; set; }
+            public string ZLFSName { get; set; }
+        }
 
         private IList<FXLX> fxlxList = new List<FXLX>();
         public IList<FXLX> FXLXList { get { return fxlxList; } set { fxlxList = value; } }
@@ -91,6 +96,23 @@ namespace LFZB_PMS
                 }
             }
             cmbfxlx.ItemsSource = fxlxList; cmbfxlx.SelectedValuePath = "FXLXCode"; cmbfxlx.DisplayMemberPath = "FXLXName";
+        }
+        void BindZLFS()
+        {
+            IList<ZLFS> list = new List<ZLFS>();
+            DataTable dt = fxsDal.GetZLFS();
+            if (dt != null && dt.Rows.Count != 0)
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    list.Add(new ZLFS()
+                    {
+                        ZLFSCode = row["zlfscode"].ToString().Trim(),
+                        ZLFSName = row["zlfsname"].ToString().Trim()
+                    });
+                }
+            }
+            cmbZLFS.ItemsSource = list; cmbZLFS.SelectedValuePath = "ZLFSCode"; cmbZLFS.DisplayMemberPath = "ZLFSName";
         }
 
         public class SearchItem
@@ -135,7 +157,7 @@ namespace LFZB_PMS
         void ShowData(string fxszCode, string fxlxCode)
         {
             FXSList.Clear();
-            DataTable dt = fxsDal.GetFXSList(fxszCode, fxlxCode);
+            DataTable dt = fxsDal.GetList(fxszCode, fxlxCode);
             DataTableToList(dt);
             ShowList();
         }
@@ -163,7 +185,17 @@ namespace LFZB_PMS
                         KHYH = row["KHYH"].ToString().Trim(),
                         YHZH = row["YHZH"].ToString().Trim(),
                         BZ = row["BZ"].ToString().Trim(),
-                        GYSState = Convert.ToInt32(row["GYSState"]),
+                        CanXGJJ = Convert.ToInt32(row["CanXGJJ"]),
+                        CanXGGF = Convert.ToInt32(row["CanXGGF"]),
+                        CanXGZSDJ = Convert.ToInt32(row["CanXGZSDJ"]),
+                        CanHYDXYH = Convert.ToInt32(row["CanHYDXYH"]),
+                        CanDRTC = Convert.ToInt32(row["CanDRTC"]),
+                        XSJJGLPP = Convert.ToInt32(row["XSJJGLPP"]),
+                        JLJJGLPP = Convert.ToInt32(row["JLJJGLPP"]),
+                        JCHSBXGZ = Convert.ToInt32(row["JCHSBXGZ"]),
+                        ZLFSCode = row["ZLFSCode"].ToString().Trim(),
+                        ZLFSName = row["ZLFSName"].ToString().Trim(),
+                        State = Convert.ToInt32(row["State"]),
                         UserCode = row["UserCode"].ToString().Trim(),
                         UserName = row["UserName"].ToString().Trim(),
                         Date = row["Date"].ToString().Trim(),
@@ -251,8 +283,11 @@ namespace LFZB_PMS
         }
         private void Search_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            string column = cmbSearch.SelectedValue.ToString();
-            SearchData(column, tbValue.Text.Trim());
+            if (cmbSearch.SelectedItem != null)
+            {
+                string column = cmbSearch.SelectedValue.ToString();
+                SearchData(column, tbValue.Text.Trim());
+            }
         }
         private void Search_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -378,7 +413,7 @@ namespace LFZB_PMS
                 ShowList();
             }
 
-            e.Handled = true;
+            //e.Handled = true;
         }
         private void CheckBox_Click(object sender, RoutedEventArgs e)
         {

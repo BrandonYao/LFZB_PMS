@@ -46,7 +46,6 @@ namespace LFZB_PMS
             if (add)
             {
                 TabItem ti = new TabItem();
-
                 ti.Header = "  " + title + "  ";
                 ti.FontSize = 16;
                 ti.FontWeight = FontWeights.Bold;
@@ -93,7 +92,10 @@ namespace LFZB_PMS
         }
         private void ssppwh_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            RoutedUICommand cmd = (RoutedUICommand)e.Command;
+            UCSSPP uc = new UCSSPP();
+            uc.UCClose += new UCSSPP.HandleClose(ItemClose);
+            ShowUC(uc, cmd.Text);
         }
         private void csmcwh_Executed(object sender, ExecutedRoutedEventArgs e)
         {

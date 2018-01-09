@@ -8,6 +8,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using static LFZB_PMS.DAL.FXSDAL;
 using static LFZB_PMS.DAL.GYSDAL;
+using static LFZB_PMS.DAL.SSPPDAL;
 
 namespace LFZB_PMS
 {
@@ -27,6 +28,11 @@ namespace LFZB_PMS
                 case "LFZB_PMS.DAL.FXSDAL+FXSClass":
                     FXSClass fxs = value as FXSClass;
                     if (fxs.IsDirty) c = Colors.LightCoral;
+                    else c = Colors.LightGreen;
+                    break;
+                case "LFZB_PMS.DAL.SSPPDAL+SSPPClass":
+                    SSPPClass sspp = value as SSPPClass;
+                    if (sspp.IsDirty) c = Colors.LightCoral;
                     else c = Colors.LightGreen;
                     break;
             }

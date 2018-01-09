@@ -61,7 +61,7 @@
                 <Image Source="/LFZB_PMS;component/Images/refresh.png" Margin="2"></Image>
             </Button>
             <Separator></Separator>
-            <TextBlock Text="选择查找条件：" VerticalAlignment="Center" Margin="5"></TextBlock>
+            <TextBlock Text="选择查找条件：" VerticalAlignment="Center" Margin="5" Foreground="Black"></TextBlock>
             <ComboBox Name="cmbSearch" MinWidth="60"></ComboBox>
             <TextBox Name="tbValue" MinWidth="100"></TextBox>
             <Button Command="cmd:BaseCmd.cmd_search" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
@@ -149,9 +149,9 @@
             <TextBlock Text="最后修改时间：" Grid.Row="9" Grid.Column="2" Style="{StaticResource textBlockStyle}"></TextBlock>
             <TextBox Grid.Row="9" Grid.Column="3" Style="{StaticResource textBoxStyle}" IsReadOnly="True" Text="{Binding Path=Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <TextBlock Text="是否有效：" Grid.Row="9" Grid.Column="4" Style="{StaticResource textBlockStyle}"></TextBlock>
-            <CheckBox Grid.Row="9" Grid.Column="5" Margin="3" VerticalAlignment="Center" IsChecked="{Binding GYSState, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" Click="CheckBox_Click"></CheckBox>
+            <CheckBox Grid.Row="9" Grid.Column="5" Margin="3" VerticalAlignment="Center" IsChecked="{Binding State, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" Click="CheckBox_Click"></CheckBox>
         </Grid>
-        <DataGrid Grid.Row="2" Grid.Column="1" Name="dgData" SelectionChanged="dgData_SelectionChanged" LoadingRow="dgData_LoadingRow">
+        <DataGrid Grid.Row="2" Grid.Column="1" Name="dgData" SelectionChanged="dgData_SelectionChanged" LoadingRow="dgData_LoadingRow" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="供应商类型" Binding="{Binding Path=GYSZName}"></DataGridTextColumn>
                 <DataGridTextColumn Header="主营产品" Binding="{Binding Path=ZYCPName}"></DataGridTextColumn>
@@ -169,12 +169,12 @@
                 <DataGridTemplateColumn Header="是否有效">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <CheckBox IsChecked="{Binding GYSState, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"></CheckBox>
+                            <CheckBox IsChecked="{Binding State, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Click="CheckBox_Click"></CheckBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="最后修改人" Binding="{Binding Path=UserName}"></DataGridTextColumn>
-                <DataGridTextColumn Header="最后修改日期" Binding="{Binding Path=Date}"></DataGridTextColumn>
+                <DataGridTextColumn Header="最后修改人" Binding="{Binding Path=UserName}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="最后修改日期" Binding="{Binding Path=Date}" IsReadOnly="True"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

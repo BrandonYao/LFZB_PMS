@@ -163,7 +163,7 @@ namespace LFZB_PMS
         void ShowData(string gyszCode, string zycpCode)
         {
             GYSList.Clear();
-            DataTable dt = gysDal.GetGYSList(gyszCode, zycpCode);
+            DataTable dt = gysDal.GetList(gyszCode, zycpCode);
             DataTableToList(dt);
             ShowList();
         }
@@ -191,7 +191,7 @@ namespace LFZB_PMS
                         KHYH = row["KHYH"].ToString().Trim(),
                         YHZH = row["YHZH"].ToString().Trim(),
                         BZ = row["BZ"].ToString().Trim(),
-                        GYSState = int.Parse(row["GYSState"].ToString()),
+                        State = int.Parse(row["State"].ToString()),
                         UserCode = row["UserCode"].ToString().Trim(),
                         UserName = row["UserName"].ToString().Trim(),
                         Date = row["Date"].ToString().Trim(),
@@ -279,8 +279,11 @@ namespace LFZB_PMS
         }
         private void Search_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            string column = cmbSearch.SelectedValue.ToString();
-            SearchData(column, tbValue.Text.Trim());
+            if (cmbSearch.SelectedItem != null)
+            {
+                string column = cmbSearch.SelectedValue.ToString();
+                SearchData(column, tbValue.Text.Trim());
+            }
         }
         private void Search_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -406,7 +409,7 @@ namespace LFZB_PMS
                 ShowList();
             }
             
-            e.Handled = true;
+            //e.Handled = true;
         }
         private void CheckBox_Click(object sender, RoutedEventArgs e)
         {

@@ -99,7 +99,7 @@
         <Setter Property="Background" Value="{StaticResource TabItem.Static.Background}"/>
         <Setter Property="BorderBrush" Value="{StaticResource TabItem.Static.Border}"/>
         <Setter Property="Margin" Value="0"/>
-        <Setter Property="Padding" Value="10,3,10,5"/>
+        <Setter Property="Padding" Value="10,8,10,5"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="VerticalContentAlignment" Value="Stretch"/>
         <Setter Property="Template">
