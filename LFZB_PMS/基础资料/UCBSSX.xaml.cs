@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -13,23 +15,26 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using static LFZB_PMS.DAL.SSPPDAL;
+using static LFZB_PMS.DAL.BSSXDAL;
 
 namespace LFZB_PMS
 {
     /// <summary>
-    /// UCSSPP.xaml 的交互逻辑
+    /// UCBSSX.xaml 的交互逻辑
     /// </summary>
-    public partial class UCSSPP : UserControl
+    public partial class UCBSSX : UserControl
     {
-        DAL.SSPPDAL ssppDal = new DAL.SSPPDAL(Config.Connection.Server);
+        DAL.BSSXDAL bssxDal = new DAL.BSSXDAL(Config.Connection.Server);
         DAL.MessageDAL msgDal = new DAL.MessageDAL();
 
         public delegate void HandleClose();
         public HandleClose UCClose;
-        public UCSSPP()
+        public UCBSSX()
         {
             InitializeComponent();
+
+            ICollectionView vw = CollectionViewSource.GetDefaultView(BSSXList);
+            vw.GroupDescriptions.Add(new PropertyGroupDescription("TypeName"));
         }
         public class SearchItem
         {
@@ -39,15 +44,15 @@ namespace LFZB_PMS
         void BindSearch()
         {
             IList<SearchItem> list = new List<SearchItem>();
-            list.Add(new SearchItem() { Column = "ssppname", Text = "首饰品牌" });
+            list.Add(new SearchItem() { Column = "bssxname", Text = "属性" });
             cmbSearch.ItemsSource = list; cmbSearch.SelectedValuePath = "Column"; cmbSearch.DisplayMemberPath = "Text";
         }
 
-        public IList<SSPPClass> SSPPList = new List<SSPPClass>();
+        public ObservableCollection<BSSXClass> BSSXList = new ObservableCollection<BSSXClass>();
         void ShowData()
         {
-            SSPPList.Clear();
-            DataTable dt = ssppDal.GetList();
+            BSSXList.Clear();
+            DataTable dt = bssxDal.GetList();
             DataTableToList(dt);
             ShowList();
         }
@@ -57,10 +62,11 @@ namespace LFZB_PMS
             {
                 foreach (DataRow row in dt.Rows)
                 {
-                    SSPPList.Add(new SSPPClass()
+                    BSSXList.Add(new BSSXClass()
                     {
-                        SSPPCode = row["ssppcode"].ToString().Trim(),
-                        SSPPName = row["ssppname"].ToString().Trim(),
+                        BSSXCode = row["bssxcode"].ToString().Trim(),
+                        BSSXName = row["bssxname"].ToString().Trim(),
+                        TypeName = row["typename"].ToString().Trim(),
                         State = Convert.ToInt32(row["State"]),
                         UserCode = row["UserCode"].ToString().Trim(),
                         UserName = row["UserName"].ToString().Trim(),
@@ -72,7 +78,8 @@ namespace LFZB_PMS
         void ShowList()
         {
             dgData.ItemsSource = null;
-            dgData.ItemsSource = SSPPList;
+            dgData.ItemsSource = BSSXList;
+
         }
         void CheckSave()
         {
@@ -83,23 +90,23 @@ namespace LFZB_PMS
         }
         void SaveList()
         {
-            foreach (SSPPClass fxs in SSPPList)
+            foreach (BSSXClass bssx in BSSXList)
             {
-                if (fxs.IsDirty)
+                if (bssx.IsDirty)
                 {
-                    if (string.IsNullOrEmpty(fxs.SSPPCode))
-                        ssppDal.InsertData(fxs, Data.UserCode);
+                    if (string.IsNullOrEmpty(bssx.BSSXCode))
+                        bssxDal.InsertData(bssx, Data.UserCode);
                     else
-                        ssppDal.UpdateData(fxs, Data.UserCode);
-                    fxs.IsDirty = false;
+                        bssxDal.UpdateData(bssx, Data.UserCode);
+                    bssx.IsDirty = false;
                 }
             }
             ShowData();
         }
         void SearchData(string column, string value)
         {
-            SSPPList.Clear();
-            DataTable dt = ssppDal.Search(column, value);
+            BSSXList.Clear();
+            DataTable dt = bssxDal.Search(column, value);
             DataTableToList(dt);
             ShowList();
         }
@@ -139,13 +146,18 @@ namespace LFZB_PMS
 
         private void Add_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            SSPPClass obj = new SSPPClass() { IsDirty = true, State = 1 };
-            SSPPList.Add(obj);
-            ShowList();
+            if (dgData.SelectedItem != null)
+            {
+                BSSXClass obj_sel = dgData.SelectedItem as BSSXClass;
+                BSSXClass obj = new BSSXClass() { IsDirty = true, State = 1, TypeName= obj_sel.TypeName };
+                BSSXList.Add(obj);
+                ShowList();
+            }
         }
         private void Add_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = true;
+            boolEdit = (dgData != null && dgData.SelectedItem != null);
+            e.CanExecute = boolEdit;
         }
 
         bool boolEdit = false;
@@ -160,9 +172,9 @@ namespace LFZB_PMS
         private void Del_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             if (!msgDal.ShowQuestion("确定要删除选中项吗？")) return;
-            SSPPClass obj = dgData.SelectedItem as SSPPClass;
-            ssppDal.DeleteData(obj.SSPPCode);
-            SSPPList.Remove(obj);
+            BSSXClass obj = dgData.SelectedItem as BSSXClass;
+            bssxDal.DeleteData(obj.BSSXCode);
+            BSSXList.Remove(obj);
             ShowList();
         }
         private void Del_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -177,9 +189,9 @@ namespace LFZB_PMS
         private void Cancle_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             bool can = false;
-            foreach (SSPPClass gys in SSPPList)
+            foreach (BSSXClass bssx in BSSXList)
             {
-                if (gys.IsDirty)
+                if (bssx.IsDirty)
                 {
                     can = true;
                     break;
@@ -204,24 +216,24 @@ namespace LFZB_PMS
         private void Print_Execute(object sender, CanExecuteRoutedEventArgs e)
         {
             bool can = true;
-            foreach (SSPPClass sspp in SSPPList)
+            foreach (BSSXClass bssx in BSSXList)
             {
-                if (sspp.IsDirty)
+                if (bssx.IsDirty)
                 {
                     can = false;
                     break;
                 }
             }
-            boolPrint = can && SSPPList.Count > 0;
+            boolPrint = can && BSSXList.Count > 0;
 
             e.CanExecute = boolPrint;
         }
         private void Export_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            DAL.ExcelDAL.ExportToExcel<SSPPClass, List<SSPPClass>> exporttoexcel =
-                new DAL.ExcelDAL.ExportToExcel<SSPPClass, List<SSPPClass>>();
+            DAL.ExcelDAL.ExportToExcel<BSSXClass, List<BSSXClass>> exporttoexcel =
+                new DAL.ExcelDAL.ExportToExcel<BSSXClass, List<BSSXClass>>();
             //实例化exporttoexcel对象
-            exporttoexcel.DataToPrint = (List<SSPPClass>)dgData.ItemsSource;
+            exporttoexcel.DataToPrint = (dgData.ItemsSource as ObservableCollection<BSSXClass>).ToList();
             exporttoexcel.GenerateReport();
         }
         private void Export_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -247,14 +259,14 @@ namespace LFZB_PMS
         }
         private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
-            SSPPClass obj = dgData.SelectedItem as SSPPClass;
+            BSSXClass obj = dgData.SelectedItem as BSSXClass;
             obj.IsDirty = true;
             ShowList();
         }
 
         private void dgData_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            SSPPClass obj = dgData.SelectedItem as SSPPClass;
+            BSSXClass obj = dgData.SelectedItem as BSSXClass;
             obj.IsDirty = true;
             ShowList();
         }

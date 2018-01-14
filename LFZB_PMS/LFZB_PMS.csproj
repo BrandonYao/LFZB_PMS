@@ -67,6 +67,15 @@
     <Compile Include="WinLogin.xaml.cs">
       <DependentUpon>WinLogin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="基础资料\UCSSMC.xaml.cs">
+      <DependentUpon>UCSSMC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="基础资料\UCBSMC.xaml.cs">
+      <DependentUpon>UCBSMC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="基础资料\UCBSSX.xaml.cs">
+      <DependentUpon>UCBSSX.xaml</DependentUpon>
+    </Compile>
     <Compile Include="基础资料\UCFXS.xaml.cs">
       <DependentUpon>UCFXS.xaml</DependentUpon>
     </Compile>
@@ -103,6 +112,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WinLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="基础资料\UCSSMC.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="基础资料\UCBSMC.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="基础资料\UCBSSX.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

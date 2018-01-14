@@ -292,7 +292,7 @@ namespace LFZB_PMS
 
         private void Add_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            GYSClass gys = new GYSClass() { IsDirty = true };
+            GYSClass gys = new GYSClass() { IsDirty = true, State = 1 };
             GYSList.Add(gys);
             ShowList();
             gdData.DataContext = gys;
@@ -315,6 +315,7 @@ namespace LFZB_PMS
         }
         private void Del_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            if (!msgDal.ShowQuestion("确定要删除选中项吗？")) return;
             GYSClass gys = dgData.SelectedItem as GYSClass;
             gysDal.DeleteData(gys.GYSCode);
             GYSList.Remove(gys);

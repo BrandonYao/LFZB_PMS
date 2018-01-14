@@ -296,7 +296,7 @@ namespace LFZB_PMS
 
         private void Add_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            FXSClass gys = new FXSClass() { IsDirty = true };
+            FXSClass gys = new FXSClass() { IsDirty = true, State = 1 };
             FXSList.Add(gys);
             ShowList();
             gdData.DataContext = gys;
@@ -318,6 +318,7 @@ namespace LFZB_PMS
         }
         private void Del_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            if (!msgDal.ShowQuestion("确定要删除选中项吗？")) return;
             FXSClass gys = dgData.SelectedItem as FXSClass;
             fxsDal.DeleteData(gys.FXSCode);
             FXSList.Remove(gys);

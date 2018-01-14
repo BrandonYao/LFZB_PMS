@@ -45,6 +45,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SSMCDAL.cs" />
+    <Compile Include="BSMCDAL.cs" />
+    <Compile Include="BSSXDAL.cs" />
     <Compile Include="ConfigDAL.cs" />
     <Compile Include="ExcelDAL.cs" />
     <Compile Include="FXSDAL.cs" />

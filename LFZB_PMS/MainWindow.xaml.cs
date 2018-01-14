@@ -103,15 +103,24 @@ namespace LFZB_PMS
         }
         private void bsmcwh_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            RoutedUICommand cmd = (RoutedUICommand)e.Command;
+            UCBSMC uc = new UCBSMC();
+            uc.UCClose += new UCBSMC.HandleClose(ItemClose);
+            ShowUC(uc, cmd.Text);
         }
         private void bssxwh_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            RoutedUICommand cmd = (RoutedUICommand)e.Command;
+            UCBSSX uc = new UCBSSX();
+            uc.UCClose += new UCBSSX.HandleClose(ItemClose);
+            ShowUC(uc, cmd.Text);
         }
         private void ssmcwh_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            RoutedUICommand cmd = (RoutedUICommand)e.Command;
+            UCSSMC uc = new UCSSMC();
+            uc.UCClose += new UCSSMC.HandleClose(ItemClose);
+            ShowUC(uc, cmd.Text);
         }
         private void zkkwwh_Executed(object sender, ExecutedRoutedEventArgs e)
         {

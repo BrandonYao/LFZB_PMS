@@ -166,7 +166,7 @@
                 <DataGridTextColumn Header="开户银行" Binding="{Binding Path=KHYH}"></DataGridTextColumn>
                 <DataGridTextColumn Header="银行账户" Binding="{Binding Path=YHZH}"></DataGridTextColumn>
                 <DataGridTextColumn Header="备注" Binding="{Binding Path=BZ}"></DataGridTextColumn>
-                <DataGridTemplateColumn Header="是否有效">
+                <DataGridTemplateColumn Header="有效">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <CheckBox IsChecked="{Binding State, Mode=TwoWay, Converter={StaticResource boolConverter}, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Click="CheckBox_Click"></CheckBox>
