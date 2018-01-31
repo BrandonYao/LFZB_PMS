@@ -1,20 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using static LFZB_PMS.CommModel;
 using static LFZB_PMS.DAL.SSMCDAL;
 
 namespace LFZB_PMS
@@ -32,14 +24,6 @@ namespace LFZB_PMS
         public UCSSMC()
         {
             InitializeComponent();
-
-            ICollectionView vw = CollectionViewSource.GetDefaultView(SSMCList);
-            vw.GroupDescriptions.Add(new PropertyGroupDescription("TypeName"));
-        }
-        public class SearchItem
-        {
-            public string Column { get; set; }
-            public string Text { get; set; }
         }
         void BindSearch()
         {
@@ -207,7 +191,7 @@ namespace LFZB_PMS
         {
         }
         bool boolPrint = false;
-        private void Print_Execute(object sender, CanExecuteRoutedEventArgs e)
+        private void Print_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             bool can = true;
             foreach (SSMCClass bssx in SSMCList)

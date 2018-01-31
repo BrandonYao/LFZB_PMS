@@ -124,11 +124,17 @@ namespace LFZB_PMS
         }
         private void zkkwwh_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            RoutedUICommand cmd = (RoutedUICommand)e.Command;
+            UCZKKW uc = new UCZKKW();
+            uc.UCClose += new UCZKKW.HandleClose(ItemClose);
+            ShowUC(uc, cmd.Text);
         }
         private void fxgzwh_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            RoutedUICommand cmd = (RoutedUICommand)e.Command;
+            UCFXGZ uc = new UCFXGZ();
+            uc.UCClose += new UCFXGZ.HandleClose(ItemClose);
+            ShowUC(uc, cmd.Text);
         }
         private void xtrywh_Executed(object sender, ExecutedRoutedEventArgs e)
         {
@@ -144,19 +150,31 @@ namespace LFZB_PMS
         }
         private void sybzwh_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            RoutedUICommand cmd = (RoutedUICommand)e.Command;
+            UCSYBZ uc = new UCSYBZ();
+            uc.UCClose += new UCSYBZ.HandleClose(ItemClose);
+            ShowUC(uc, cmd.Text);
         }
         private void cxyhxm_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            RoutedUICommand cmd = (RoutedUICommand)e.Command;
+            UCYHXM uc = new UCYHXM();
+            uc.UCClose += new UCYHXM.HandleClose(ItemClose);
+            ShowUC(uc, cmd.Text);
         }
         private void syfswh_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            RoutedUICommand cmd = (RoutedUICommand)e.Command;
+            UCSYFS uc = new UCSYFS();
+            uc.UCClose += new UCSYFS.HandleClose(ItemClose);
+            ShowUC(uc, cmd.Text);
         }
         private void xsxtsx_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            RoutedUICommand cmd = (RoutedUICommand)e.Command;
+            UCXSXTSX uc = new UCXSXTSX();
+            uc.UCClose += new UCXSXTSX.HandleClose(ItemClose);
+            ShowUC(uc, cmd.Text);
         }
         private void sslspz_Executed(object sender, ExecutedRoutedEventArgs e)
         {

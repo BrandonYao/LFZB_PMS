@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="LFZB_PMS.UCBSSX"
+﻿<UserControl x:Class="LFZB_PMS.UCSYBZ"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -16,11 +16,7 @@
                     <ControlTemplate TargetType="{x:Type GroupItem}">
                         <Expander IsExpanded="True">
                             <Expander.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Path=Name}"/>
-                                    <TextBlock Text="："/>
-                                    <TextBlock Text="{Binding Path=ItemCount}"/>
-                                </StackPanel>
+                                <TextBlock Text="{Binding Path=Name}"/>
                             </Expander.Header>
                             <ItemsPresenter />
                         </Expander>
@@ -75,7 +71,7 @@
                 <Image Source="/LFZB_PMS;component/Images/save.png" Margin="2"></Image>
             </Button>
             <Separator></Separator>
-            <Button Command="cmd:BaseCmd.cmd_print" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
+            <Button Command="cmd:BaseCmd.cmd_print" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}" Visibility="Collapsed">
                 <Image Source="/LFZB_PMS;component/Images/print.png" Margin="-1"></Image>
             </Button>
             <Button Command="cmd:BaseCmd.cmd_export" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
@@ -88,17 +84,9 @@
         </ToolBar>
 
         <DataGrid Grid.Row="1" Grid.Column="1" Name="dgData" LoadingRow="dgData_LoadingRow" CellEditEnding="dgData_CellEditEnding">
-            <DataGrid.GroupStyle>
-                <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyle}">
-                    <GroupStyle.Panel>
-                        <ItemsPanelTemplate>
-                            <DataGridRowsPresenter/>
-                        </ItemsPanelTemplate>
-                    </GroupStyle.Panel>
-                </GroupStyle>
-            </DataGrid.GroupStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="属性" Binding="{Binding Path=BSSXName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="班组名称" Binding="{Binding Path=SYBZName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="备注" Binding="{Binding Path=Remark, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                 <DataGridTemplateColumn Header="有效">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

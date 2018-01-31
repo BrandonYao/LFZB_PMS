@@ -35,7 +35,7 @@
         <CommandBinding Command="cmd:BaseCmd.cmd_del" Executed="Del_Executed" CanExecute="Del_CanExecute"></CommandBinding>
         <CommandBinding Command="cmd:BaseCmd.cmd_cancle" Executed="Cancle_Executed" CanExecute="Cancle_CanExecute"></CommandBinding>
         <CommandBinding Command="cmd:BaseCmd.cmd_save" Executed="Save_Executed" CanExecute="Save_CanExecute"></CommandBinding>
-        <CommandBinding Command="cmd:BaseCmd.cmd_print" Executed="Print_Executed" CanExecute="Print_Execute"></CommandBinding>
+        <CommandBinding Command="cmd:BaseCmd.cmd_print" Executed="Print_Executed" CanExecute="Print_CanExecute"></CommandBinding>
         <CommandBinding Command="cmd:BaseCmd.cmd_export" Executed="Export_Executed" CanExecute="Export_CanExecute"></CommandBinding>
         <CommandBinding Command="cmd:BaseCmd.cmd_close" Executed="Close_Executed" CanExecute="Close_CanExecute"></CommandBinding>
     </UserControl.CommandBindings>

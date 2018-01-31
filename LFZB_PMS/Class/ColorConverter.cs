@@ -6,12 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
-using static LFZB_PMS.DAL.BSMCDAL;
-using static LFZB_PMS.DAL.BSSXDAL;
-using static LFZB_PMS.DAL.FXSDAL;
-using static LFZB_PMS.DAL.GYSDAL;
-using static LFZB_PMS.DAL.SSMCDAL;
-using static LFZB_PMS.DAL.SSPPDAL;
 
 namespace LFZB_PMS
 {
@@ -24,33 +18,63 @@ namespace LFZB_PMS
             switch (t)
             {
                 case "LFZB_PMS.DAL.GYSDAL+GYSClass":
-                    GYSClass gys = value as GYSClass;
+                    DAL.GYSDAL.GYSClass gys = value as DAL.GYSDAL.GYSClass;
                     if (gys.IsDirty) c = Colors.LightCoral;
                     else c = Colors.LightGreen;
                     break;
                 case "LFZB_PMS.DAL.FXSDAL+FXSClass":
-                    FXSClass fxs = value as FXSClass;
+                    DAL.FXSDAL.FXSClass fxs = value as DAL.FXSDAL.FXSClass;
                     if (fxs.IsDirty) c = Colors.LightCoral;
                     else c = Colors.LightGreen;
                     break;
                 case "LFZB_PMS.DAL.SSPPDAL+SSPPClass":
-                    SSPPClass sspp = value as SSPPClass;
+                    DAL.SSPPDAL.SSPPClass sspp = value as DAL.SSPPDAL.SSPPClass;
                     if (sspp.IsDirty) c = Colors.LightCoral;
                     else c = Colors.LightGreen;
                     break;
                 case "LFZB_PMS.DAL.BSMCDAL+BSMCClass":
-                    BSMCClass bsmc = value as BSMCClass;
+                    DAL.BSMCDAL.BSMCClass bsmc = value as DAL.BSMCDAL.BSMCClass;
                     if (bsmc.IsDirty) c = Colors.LightCoral;
                     else c = Colors.LightGreen;
                     break;
                 case "LFZB_PMS.DAL.BSSXDAL+BSSXClass":
-                    BSSXClass bssx = value as BSSXClass;
+                    DAL.BSSXDAL.BSSXClass bssx = value as DAL.BSSXDAL.BSSXClass;
                     if (bssx.IsDirty) c = Colors.LightCoral;
                     else c = Colors.LightGreen;
                     break;
                 case "LFZB_PMS.DAL.SSMCDAL+SSMCClass":
-                    SSMCClass ssmc = value as SSMCClass;
+                    DAL.SSMCDAL.SSMCClass ssmc = value as DAL.SSMCDAL.SSMCClass;
                     if (ssmc.IsDirty) c = Colors.LightCoral;
+                    else c = Colors.LightGreen;
+                    break;
+                case "LFZB_PMS.DAL.ZKKWDAL+ZKKWClass":
+                    DAL.ZKKWDAL.ZKKWClass zkkw = value as DAL.ZKKWDAL.ZKKWClass;
+                    if (zkkw.IsDirty) c = Colors.LightCoral;
+                    else c = Colors.LightGreen;
+                    break;
+                case "LFZB_PMS.DAL.FXGZDAL+FXGZClass":
+                    DAL.FXGZDAL.FXGZClass fxgz = value as DAL.FXGZDAL.FXGZClass;
+                    if (fxgz.IsDirty) c = Colors.LightCoral;
+                    else c = Colors.LightGreen;
+                    break;
+                case "LFZB_PMS.DAL.SYBZDAL+SYBZClass":
+                    DAL.SYBZDAL.SYBZClass sybz = value as DAL.SYBZDAL.SYBZClass;
+                    if (sybz.IsDirty) c = Colors.LightCoral;
+                    else c = Colors.LightGreen;
+                    break;
+                case "LFZB_PMS.DAL.YHXMDAL+YHXMClass":
+                    DAL.YHXMDAL.YHXMClass yhxm = value as DAL.YHXMDAL.YHXMClass;
+                    if (yhxm.IsDirty) c = Colors.LightCoral;
+                    else c = Colors.LightGreen;
+                    break;
+                case "LFZB_PMS.DAL.SYFSDAL+SYFSClass":
+                    DAL.SYFSDAL.SYFSClass syfs = value as DAL.SYFSDAL.SYFSClass;
+                    if (syfs.IsDirty) c = Colors.LightCoral;
+                    else c = Colors.LightGreen;
+                    break;
+                case "LFZB_PMS.DAL.XSXTSXDAL+XSXTSXClass":
+                    DAL.XSXTSXDAL.XSXTSXClass xsxt = value as DAL.XSXTSXDAL.XSXTSXClass;
+                    if (xsxt.IsDirty) c = Colors.LightCoral;
                     else c = Colors.LightGreen;
                     break;
             }

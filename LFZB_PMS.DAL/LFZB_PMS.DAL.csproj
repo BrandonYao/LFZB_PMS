@@ -45,6 +45,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="XSXTSXDAL.cs" />
+    <Compile Include="FXGZDAL.cs" />
+    <Compile Include="SYFSDAL.cs" />
+    <Compile Include="SYBZDAL.cs" />
+    <Compile Include="YHXMDAL.cs" />
+    <Compile Include="ZKKWDAL.cs" />
     <Compile Include="SSMCDAL.cs" />
     <Compile Include="BSMCDAL.cs" />
     <Compile Include="BSSXDAL.cs" />

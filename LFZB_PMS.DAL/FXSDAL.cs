@@ -23,7 +23,7 @@ namespace LFZB_PMS.DAL
         }
         public DataTable GetFXSInfo()
         {
-            string sql = "select * from sys_fxs";
+            string sql = "select * from sys_fxs where state=1";
             DataSet ds = mySql.DS(sql);
             return ds.Tables[0];
         }

@@ -9,39 +9,39 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using static LFZB_PMS.CommModel;
-using static LFZB_PMS.DAL.BSMCDAL;
+using static LFZB_PMS.DAL.XSXTSXDAL;
 
 namespace LFZB_PMS
 {
     /// <summary>
     /// UCBSSX.xaml 的交互逻辑
     /// </summary>
-    public partial class UCBSMC : UserControl
+    public partial class UCXSXTSX : UserControl
     {
-        DAL.BSMCDAL bsmcDal = new DAL.BSMCDAL(Config.Connection.Server);
+        DAL.XSXTSXDAL bssxDal = new DAL.XSXTSXDAL(Config.Connection.Server);
         DAL.MessageDAL msgDal = new DAL.MessageDAL();
 
         public delegate void HandleClose();
         public HandleClose UCClose;
-        public UCBSMC()
+        public UCXSXTSX()
         {
             InitializeComponent();
 
-            ICollectionView vw = CollectionViewSource.GetDefaultView(BSMCList);
+            ICollectionView vw = CollectionViewSource.GetDefaultView(DataList);
             vw.GroupDescriptions.Add(new PropertyGroupDescription("TypeName"));
         }
         void BindSearch()
         {
             IList<SearchItem> list = new List<SearchItem>();
-            list.Add(new SearchItem() { Column = "bsmcname", Text = "宝石名称" });
+            list.Add(new SearchItem() { Column = "xsxtsxname", Text = "属性" });
             cmbSearch.ItemsSource = list; cmbSearch.SelectedValuePath = "Column"; cmbSearch.DisplayMemberPath = "Text";
         }
 
-        public ObservableCollection<BSMCClass> BSMCList = new ObservableCollection<BSMCClass>();
+        public ObservableCollection<XSXTSXClass> DataList = new ObservableCollection<XSXTSXClass>();
         void ShowData()
         {
-            BSMCList.Clear();
-            DataTable dt = bsmcDal.GetList();
+            DataList.Clear();
+            DataTable dt = bssxDal.GetList();
             DataTableToList(dt);
             ShowList();
         }
@@ -51,10 +51,12 @@ namespace LFZB_PMS
             {
                 foreach (DataRow row in dt.Rows)
                 {
-                    BSMCList.Add(new BSMCClass()
+                    DataList.Add(new XSXTSXClass()
                     {
-                        BSMCCode = row["bsmccode"].ToString().Trim(),
-                        BSMCName = row["bsmcname"].ToString().Trim(),
+                        XSXTSXCode = row["XSXTSXCode"].ToString().Trim(),
+                        XSXTSXName = row["XSXTSXName"].ToString().Trim(),
+                        TypeName = row["typename"].ToString().Trim(),
+                        IsDefault = Convert.ToInt32(row["IsDefault"]),
                         State = Convert.ToInt32(row["State"]),
                         UserCode = row["UserCode"].ToString().Trim(),
                         UserName = row["UserName"].ToString().Trim(),
@@ -66,8 +68,7 @@ namespace LFZB_PMS
         void ShowList()
         {
             dgData.ItemsSource = null;
-            dgData.ItemsSource = BSMCList;
-
+            dgData.ItemsSource = DataList;
         }
         void CheckSave()
         {
@@ -78,23 +79,23 @@ namespace LFZB_PMS
         }
         void SaveList()
         {
-            foreach (BSMCClass bsmc in BSMCList)
+            foreach (XSXTSXClass bssx in DataList)
             {
-                if (bsmc.IsDirty)
+                if (bssx.IsDirty)
                 {
-                    if (string.IsNullOrEmpty(bsmc.BSMCCode))
-                        bsmcDal.InsertData(bsmc, Data.UserCode);
+                    if (string.IsNullOrEmpty(bssx.XSXTSXCode))
+                        bssxDal.InsertData(bssx, Data.UserCode);
                     else
-                        bsmcDal.UpdateData(bsmc, Data.UserCode);
-                    bsmc.IsDirty = false;
+                        bssxDal.UpdateData(bssx, Data.UserCode);
+                    bssx.IsDirty = false;
                 }
             }
             ShowData();
         }
         void SearchData(string column, string value)
         {
-            BSMCList.Clear();
-            DataTable dt = bsmcDal.Search(column, value);
+            DataList.Clear();
+            DataTable dt = bssxDal.Search(column, value);
             DataTableToList(dt);
             ShowList();
         }
@@ -134,13 +135,18 @@ namespace LFZB_PMS
 
         private void Add_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            BSMCClass obj = new BSMCClass() { IsDirty = true, State = 1 };
-            BSMCList.Add(obj);
-            ShowList();
+            if (dgData.SelectedItem != null)
+            {
+                XSXTSXClass obj_sel = dgData.SelectedItem as XSXTSXClass;
+                XSXTSXClass obj = new XSXTSXClass() { IsDirty = true, State = 1, TypeName= obj_sel.TypeName };
+                DataList.Add(obj);
+                ShowList();
+            }
         }
         private void Add_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = true;
+            boolEdit = (dgData != null && dgData.SelectedItem != null);
+            e.CanExecute = boolEdit;
         }
 
         bool boolEdit = false;
@@ -155,9 +161,9 @@ namespace LFZB_PMS
         private void Del_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             if (!msgDal.ShowQuestion("确定要删除选中项吗？")) return;
-            BSMCClass obj = dgData.SelectedItem as BSMCClass;
-            bsmcDal.DeleteData(obj.BSMCCode);
-            BSMCList.Remove(obj);
+            XSXTSXClass obj = dgData.SelectedItem as XSXTSXClass;
+            bssxDal.DeleteData(obj.XSXTSXCode);
+            DataList.Remove(obj);
             ShowList();
         }
         private void Del_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -172,7 +178,7 @@ namespace LFZB_PMS
         private void Cancle_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             bool can = false;
-            foreach (BSMCClass bssx in BSMCList)
+            foreach (XSXTSXClass bssx in DataList)
             {
                 if (bssx.IsDirty)
                 {
@@ -199,7 +205,7 @@ namespace LFZB_PMS
         private void Print_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             bool can = true;
-            foreach (BSMCClass bssx in BSMCList)
+            foreach (XSXTSXClass bssx in DataList)
             {
                 if (bssx.IsDirty)
                 {
@@ -207,16 +213,16 @@ namespace LFZB_PMS
                     break;
                 }
             }
-            boolPrint = can && BSMCList.Count > 0;
+            boolPrint = can && DataList.Count > 0;
 
             e.CanExecute = boolPrint;
         }
         private void Export_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            DAL.ExcelDAL.ExportToExcel<BSMCClass, List<BSMCClass>> exporttoexcel =
-                new DAL.ExcelDAL.ExportToExcel<BSMCClass, List<BSMCClass>>();
+            DAL.ExcelDAL.ExportToExcel<XSXTSXClass, List<XSXTSXClass>> exporttoexcel =
+                new DAL.ExcelDAL.ExportToExcel<XSXTSXClass, List<XSXTSXClass>>();
             //实例化exporttoexcel对象
-            exporttoexcel.DataToPrint = (dgData.ItemsSource as ObservableCollection<BSMCClass>).ToList();
+            exporttoexcel.DataToPrint = (dgData.ItemsSource as ObservableCollection<XSXTSXClass>).ToList();
             exporttoexcel.GenerateReport();
         }
         private void Export_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -242,14 +248,14 @@ namespace LFZB_PMS
         }
         private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
-            BSMCClass obj = dgData.SelectedItem as BSMCClass;
+            XSXTSXClass obj = dgData.SelectedItem as XSXTSXClass;
             obj.IsDirty = true;
             ShowList();
         }
 
         private void dgData_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            BSMCClass obj = dgData.SelectedItem as BSMCClass;
+            XSXTSXClass obj = dgData.SelectedItem as XSXTSXClass;
             obj.IsDirty = true;
             ShowList();
         }

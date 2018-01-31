@@ -60,12 +60,31 @@
     <Compile Include="Class\BoolConverter.cs" />
     <Compile Include="Class\Calculation.cs" />
     <Compile Include="Class\ColorConverter.cs" />
+    <Compile Include="Class\CommModel.cs" />
     <Compile Include="Class\Config.cs" />
     <Compile Include="Class\Data.cs" />
     <Compile Include="Command\BaseCmd.cs" />
     <Compile Include="Command\MenuCmd.cs" />
     <Compile Include="WinLogin.xaml.cs">
       <DependentUpon>WinLogin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="基础资料\UCXSXTSX.xaml.cs">
+      <DependentUpon>UCXSXTSX.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="基础资料\UCFXGZ.xaml.cs">
+      <DependentUpon>UCFXGZ.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="基础资料\UCSYFS.xaml.cs">
+      <DependentUpon>UCSYFS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="基础资料\UCSYBZ.xaml.cs">
+      <DependentUpon>UCSYBZ.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="基础资料\UCYHXM.xaml.cs">
+      <DependentUpon>UCYHXM.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="基础资料\UCZKKW.xaml.cs">
+      <DependentUpon>UCZKKW.xaml</DependentUpon>
     </Compile>
     <Compile Include="基础资料\UCSSMC.xaml.cs">
       <DependentUpon>UCSSMC.xaml</DependentUpon>
@@ -114,6 +133,30 @@
     <Page Include="WinLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="基础资料\UCXSXTSX.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="基础资料\UCFXGZ.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="基础资料\UCSYFS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="基础资料\UCSYBZ.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="基础资料\UCYHXM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="基础资料\UCZKKW.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="基础资料\UCSSMC.xaml">
       <Generator>MSBuild:Compile</Generator>
