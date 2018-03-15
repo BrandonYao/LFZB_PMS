@@ -104,6 +104,9 @@
     <Compile Include="基础资料\UCSSPP.xaml.cs">
       <DependentUpon>UCSSPP.xaml</DependentUpon>
     </Compile>
+    <Compile Include="总库管理\UCOrderList.xaml.cs">
+      <DependentUpon>UCOrderList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="系统维护\UCUser.xaml.cs">
       <DependentUpon>UCUser.xaml</DependentUpon>
     </Compile>
@@ -182,6 +185,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="总库管理\UCOrderList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="系统维护\UCUser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -219,7 +226,6 @@
     <Folder Include="会员管理\" />
     <Folder Include="分销管理\" />
     <Folder Include="帮助\" />
-    <Folder Include="总库管理\" />
     <Folder Include="销售管理\" />
   </ItemGroup>
   <ItemGroup>

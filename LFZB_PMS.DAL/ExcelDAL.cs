@@ -53,10 +53,10 @@ namespace LFZB_PMS.DAL
                         }
                     }
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     result = 0;
-                    //("Excel导出失敗！\n", e.Message);
+                    //("Excel导出失敗！\n", ex.Message);
                 }
                 finally
                 {
@@ -182,11 +182,10 @@ namespace LFZB_PMS.DAL
                     System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
                     obj = null;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     obj = null;
                     //MessageBox.Show(ex.Message.ToString());
-
                 }
                 finally
                 {
