@@ -223,7 +223,8 @@ namespace LFZB_PMS
                 new DAL.ExcelDAL.ExportToExcel<XSXTSXClass, List<XSXTSXClass>>();
             //实例化exporttoexcel对象
             exporttoexcel.DataToPrint = (dgData.ItemsSource as ObservableCollection<XSXTSXClass>).ToList();
-            exporttoexcel.GenerateReport();
+            string fileName = "销售销退属性";
+            exporttoexcel.ListToExcel(fileName);
         }
         private void Export_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {

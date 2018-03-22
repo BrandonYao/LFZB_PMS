@@ -213,7 +213,8 @@ namespace LFZB_PMS
                 new DAL.ExcelDAL.ExportToExcel<ZKKWClass, List<ZKKWClass>>();
             //实例化exporttoexcel对象
             exporttoexcel.DataToPrint = (dgData.ItemsSource as ObservableCollection<ZKKWClass>).ToList();
-            exporttoexcel.GenerateReport();
+            string fileName = "总库库位";
+            exporttoexcel.ListToExcel(fileName);
         }
         private void Export_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {

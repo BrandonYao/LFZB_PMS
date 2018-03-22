@@ -68,6 +68,9 @@
     <Compile Include="WinLogin.xaml.cs">
       <DependentUpon>WinLogin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="基础资料\UCCSMC.xaml.cs">
+      <DependentUpon>UCCSMC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="基础资料\UCXSXTSX.xaml.cs">
       <DependentUpon>UCXSXTSX.xaml</DependentUpon>
     </Compile>
@@ -136,6 +139,10 @@
     <Page Include="WinLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="基础资料\UCCSMC.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="基础资料\UCXSXTSX.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -263,6 +270,14 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\confirm.png" />
+    <Resource Include="Images\redo.png" />
+    <Resource Include="Images\undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\check.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

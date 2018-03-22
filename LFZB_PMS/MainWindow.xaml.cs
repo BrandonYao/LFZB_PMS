@@ -99,7 +99,10 @@ namespace LFZB_PMS
         }
         private void csmcwh_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            RoutedUICommand cmd = (RoutedUICommand)e.Command;
+            UCCSMC uc = new UCCSMC();
+            uc.UCClose += new UCCSMC.HandleClose(ItemClose);
+            ShowUC(uc, cmd.Text);
         }
         private void bsmcwh_Executed(object sender, ExecutedRoutedEventArgs e)
         {
@@ -551,7 +554,7 @@ namespace LFZB_PMS
         {
             RoutedUICommand cmd = (RoutedUICommand)e.Command;
             UCXTCS uc = new UCXTCS();
-            //uc.UCClose += new UCGYS.HandleClose(ItemClose);
+            uc.UCClose += new UCXTCS.HandleClose(ItemClose);
             ShowUC(uc, cmd.Text);
         }
 

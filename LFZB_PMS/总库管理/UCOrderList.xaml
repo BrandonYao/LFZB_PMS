@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:LFZB_PMS"
              xmlns:cmd="clr-namespace:LFZB_PMS.Command"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="800">
+             d:DesignHeight="500" d:DesignWidth="1000">
     <UserControl.CommandBindings>
         <CommandBinding Command="cmd:BaseCmd.cmd_refresh" Executed="Refresh_Executed" CanExecute="Refresh_CanExecute"></CommandBinding>
         <CommandBinding Command="cmd:BaseCmd.cmd_search" Executed="Search_Executed" CanExecute="Search_CanExecute"></CommandBinding>
@@ -29,6 +29,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <ToolBar Grid.Row="0" ToolBarTray.IsLocked="True" Grid.Column="1">
             <Button Command="cmd:BaseCmd.cmd_refresh" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
@@ -56,16 +58,16 @@
             </Button>
             <Separator></Separator>
             <Button Command="cmd:BaseCmd.cmd_confirm" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
-                <Image Source="/LFZB_PMS;component/Images/save.png" Margin="2"></Image>
+                <Image Source="/LFZB_PMS;component/Images/confirm.png" Margin="-3,3"></Image>
             </Button>
             <Button Command="cmd:BaseCmd.cmd_confirm_not" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
-                <Image Source="/LFZB_PMS;component/Images/save.png" Margin="2"></Image>
+                <Image Source="/LFZB_PMS;component/Images/undo.png" Margin="0"></Image>
             </Button>
             <Button Command="cmd:BaseCmd.cmd_check" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
-                <Image Source="/LFZB_PMS;component/Images/save.png" Margin="2"></Image>
+                <Image Source="/LFZB_PMS;component/Images/check.png" Margin="2"></Image>
             </Button>
             <Button Command="cmd:BaseCmd.cmd_check_not" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
-                <Image Source="/LFZB_PMS;component/Images/save.png" Margin="2"></Image>
+                <Image Source="/LFZB_PMS;component/Images/redo.png" Margin="0"></Image>
             </Button>
             <Separator></Separator>
             <Button Command="cmd:BaseCmd.cmd_print" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
@@ -80,24 +82,51 @@
             </Button>
         </ToolBar>
 
-        <DataGrid Grid.Row="1" Grid.Column="1" Name="dgData" LoadingRow="dgData_LoadingRow" CellEditEnding="dgData_CellEditEnding">
+        <DataGrid Grid.Row="1" Grid.Column="1" Name="dgMaster" LoadingRow="dgData_LoadingRow" CellEditEnding="dgData_CellEditEnding">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="入库单号" Binding="{Binding Path=OrderCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
-                <DataGridTextColumn Header="首饰大类" Binding="{Binding Path=SSMCName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="首饰大类" Binding="{Binding Path=SSDLName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                 <DataGridTextColumn Header="入库日期" Binding="{Binding Path=OrderDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                 <DataGridTextColumn Header="供应商" Binding="{Binding Path=GYSName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                 <DataGridTextColumn Header="件数" Binding="{Binding Path=Count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
-                <DataGridTextColumn Header="计划分销" Binding="{Binding Path=FXSName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="计划分销" Binding="{Binding Path=PlanFXSName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="状态" Binding="{Binding Path=StateText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                 <DataGridTextColumn Header="单据备注" Binding="{Binding Path=BZ, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                 <DataGridTextColumn Header="单据分类" Binding="{Binding Path=OrderTypeText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                 <DataGridTextColumn Header="总库库位" Binding="{Binding Path=ZKKWName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                 <DataGridTextColumn Header="制单人" Binding="{Binding Path=CreateUserName}" IsReadOnly="True"></DataGridTextColumn>
-                <DataGridTextColumn Header="制单时间" Binding="{Binding Path=CreateDate}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="制单时间" Binding="{Binding Path=CreateTime}" IsReadOnly="True"></DataGridTextColumn>
                 <DataGridTextColumn Header="确认人" Binding="{Binding Path=ConfirmUserName}" IsReadOnly="True"></DataGridTextColumn>
-                <DataGridTextColumn Header="确认时间" Binding="{Binding Path=ConfirmDate}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="确认时间" Binding="{Binding Path=ConfirmTime}" IsReadOnly="True"></DataGridTextColumn>
                 <DataGridTextColumn Header="审核人" Binding="{Binding Path=CheckUserName}" IsReadOnly="True"></DataGridTextColumn>
-                <DataGridTextColumn Header="审核时间" Binding="{Binding Path=CheckDate}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="审核时间" Binding="{Binding Path=CheckTime}" IsReadOnly="True"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
+
+        <DataGrid Grid.Row="2" Grid.Column="1" Name="dgDetails" LoadingRow="dgData_LoadingRow" CellEditEnding="dgData_CellEditEnding">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="条码号" Binding="{Binding Path=Barcode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="首饰名称" Binding="{Binding Path=SSMC, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="当前状态" Binding="{Binding Path=Satte, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="厂家款号" Binding="{Binding Path=CJKH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="证书号" Binding="{Binding Path=ZSH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="净金重" Binding="{Binding Path=JJZ, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="配件" Binding="{Binding Path=PJ, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="总件重" Binding="{Binding Path=ZJZ, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="手寸" Binding="{Binding Path=SC, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="主石(ct/g/p)" Binding="{Binding Path=ZS}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="形状" Binding="{Binding Path=XZ}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="颜色" Binding="{Binding Path=YS}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="净度" Binding="{Binding Path=JD}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="切工" Binding="{Binding Path=QG}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="副石(ct/g/p)" Binding="{Binding Path=FS}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="售价" Binding="{Binding Path=SJ}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="当前分销商" Binding="{Binding Path=NowFXSName}" IsReadOnly="True"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Grid Grid.Row="3">
+            
+        </Grid>
     </Grid>
 </UserControl>

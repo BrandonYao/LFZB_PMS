@@ -32,6 +32,11 @@ namespace LFZB_PMS
                     if (sspp.IsDirty) c = Colors.LightCoral;
                     else c = Colors.LightGreen;
                     break;
+                case "LFZB_PMS.DAL.CSMCDAL+CSMCClass":
+                    DAL.CSMCDAL.CSMCClass csmc = value as DAL.CSMCDAL.CSMCClass;
+                    if (csmc.IsDirty) c = Colors.LightCoral;
+                    else c = Colors.LightGreen;
+                    break;
                 case "LFZB_PMS.DAL.BSMCDAL+BSMCClass":
                     DAL.BSMCDAL.BSMCClass bsmc = value as DAL.BSMCDAL.BSMCClass;
                     if (bsmc.IsDirty) c = Colors.LightCoral;

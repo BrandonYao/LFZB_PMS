@@ -1,43 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using static LFZB_PMS.CommModel;
-using static LFZB_PMS.DAL.YHXMDAL;
+using static LFZB_PMS.DAL.CSMCDAL;
 
 namespace LFZB_PMS
 {
     /// <summary>
     /// UCBSSX.xaml 的交互逻辑
     /// </summary>
-    public partial class UCYHXM : UserControl
+    public partial class UCCSMC : UserControl
     {
-        DAL.YHXMDAL dal = new DAL.YHXMDAL(Config.Connection.Server);
+        DAL.CSMCDAL objDal = new DAL.CSMCDAL(Config.Connection.Server);
         DAL.MessageDAL msgDal = new DAL.MessageDAL();
 
         public delegate void HandleClose();
         public HandleClose UCClose;
-        public UCYHXM()
+        public UCCSMC()
         {
             InitializeComponent();
+
+            ICollectionView vw = CollectionViewSource.GetDefaultView(ObjList);
+            vw.GroupDescriptions.Add(new PropertyGroupDescription("TypeName"));
         }
-        
         void BindSearch()
         {
             IList<SearchItem> list = new List<SearchItem>();
-            list.Add(new SearchItem() { Column = "yhxmname", Text = "优惠项目" });
+            list.Add(new SearchItem() { Column = "csmcname", Text = "成色" });
             cmbSearch.ItemsSource = list; cmbSearch.SelectedValuePath = "Column"; cmbSearch.DisplayMemberPath = "Text";
         }
 
-        public ObservableCollection<YHXMClass> DataList = new ObservableCollection<YHXMClass>();
+        public ObservableCollection<CSMCClass> ObjList = new ObservableCollection<CSMCClass>();
         void ShowData()
         {
-            DataList.Clear();
-            DataTable dt = dal.GetList();
+            ObjList.Clear();
+            DataTable dt = objDal.GetList();
             DataTableToList(dt);
             ShowList();
         }
@@ -47,10 +52,11 @@ namespace LFZB_PMS
             {
                 foreach (DataRow row in dt.Rows)
                 {
-                    DataList.Add(new YHXMClass()
+                    ObjList.Add(new CSMCClass()
                     {
-                        YHXMCode = row["YHXMCode"].ToString().Trim(),
-                        YHXMName = row["YHXMName"].ToString().Trim(),
+                        CSMCCode = row["csmccode"].ToString().Trim(),
+                        CSMCName = row["csmcname"].ToString().Trim(),
+                        TypeName = row["typename"].ToString().Trim(),
                         State = Convert.ToInt32(row["State"]),
                         UserCode = row["UserCode"].ToString().Trim(),
                         UserName = row["UserName"].ToString().Trim(),
@@ -62,8 +68,7 @@ namespace LFZB_PMS
         void ShowList()
         {
             dgData.ItemsSource = null;
-            dgData.ItemsSource = DataList;
-
+            dgData.ItemsSource = ObjList;
         }
         void CheckSave()
         {
@@ -74,23 +79,23 @@ namespace LFZB_PMS
         }
         void SaveList()
         {
-            foreach (YHXMClass cls in DataList)
+            foreach (CSMCClass obj in ObjList)
             {
-                if (cls.IsDirty)
+                if (obj.IsDirty)
                 {
-                    if (string.IsNullOrEmpty(cls.YHXMCode))
-                        dal.InsertData(cls, Data.UserCode);
+                    if (string.IsNullOrEmpty(obj.CSMCCode))
+                        objDal.InsertData(obj, Data.UserCode);
                     else
-                        dal.UpdateData(cls, Data.UserCode);
-                    cls.IsDirty = false;
+                        objDal.UpdateData(obj, Data.UserCode);
+                    obj.IsDirty = false;
                 }
             }
             ShowData();
         }
         void SearchData(string column, string value)
         {
-            DataList.Clear();
-            DataTable dt = dal.Search(column, value);
+            ObjList.Clear();
+            DataTable dt = objDal.Search(column, value);
             DataTableToList(dt);
             ShowList();
         }
@@ -119,7 +124,6 @@ namespace LFZB_PMS
         {
             if (cmbSearch.SelectedItem != null)
             {
-                CheckSave();
                 string column = cmbSearch.SelectedValue.ToString();
                 SearchData(column, tbValue.Text.Trim());
             }
@@ -131,13 +135,18 @@ namespace LFZB_PMS
 
         private void Add_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            YHXMClass cls = new YHXMClass() { IsDirty = true, State = 1 };
-            DataList.Add(cls);
-            ShowList();
+            if (dgData.SelectedItem != null)
+            {
+                CSMCClass obj_sel = dgData.SelectedItem as CSMCClass;
+                CSMCClass obj = new CSMCClass() { IsDirty = true, State = 1, TypeName= obj_sel.TypeName };
+                ObjList.Add(obj);
+                ShowList();
+            }
         }
         private void Add_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = true;
+            boolEdit = (dgData != null && dgData.SelectedItem != null);
+            e.CanExecute = boolEdit;
         }
 
         bool boolEdit = false;
@@ -152,9 +161,9 @@ namespace LFZB_PMS
         private void Del_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             if (!msgDal.ShowQuestion("确定要删除选中项吗？")) return;
-            YHXMClass cls = dgData.SelectedItem as YHXMClass;
-            dal.DeleteData(cls.YHXMCode);
-            DataList.Remove(cls);
+            CSMCClass obj = dgData.SelectedItem as CSMCClass;
+            objDal.DeleteData(obj.CSMCCode);
+            ObjList.Remove(obj);
             ShowList();
         }
         private void Del_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -169,9 +178,9 @@ namespace LFZB_PMS
         private void Cancle_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             bool can = false;
-            foreach (YHXMClass cls in DataList)
+            foreach (CSMCClass obj in ObjList)
             {
-                if (cls.IsDirty)
+                if (obj.IsDirty)
                 {
                     can = true;
                     break;
@@ -196,26 +205,26 @@ namespace LFZB_PMS
         private void Print_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             bool can = true;
-            foreach (YHXMClass cls in DataList)
+            foreach (CSMCClass obj in ObjList)
             {
-                if (cls.IsDirty)
+                if (obj.IsDirty)
                 {
                     can = false;
                     break;
                 }
             }
-            boolPrint = can && DataList.Count > 0;
+            boolPrint = can && ObjList.Count > 0;
 
             e.CanExecute = boolPrint;
         }
         private void Export_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            DAL.ExcelDAL.ExportToExcel<YHXMClass, List<YHXMClass>> exporttoexcel =
-                new DAL.ExcelDAL.ExportToExcel<YHXMClass, List<YHXMClass>>();
+            DAL.ExcelDAL.ExportToExcel<CSMCClass, List<CSMCClass>> exporttoexcel =
+                new DAL.ExcelDAL.ExportToExcel<CSMCClass, List<CSMCClass>>();
             //实例化exporttoexcel对象
-            exporttoexcel.DataToPrint = (dgData.ItemsSource as ObservableCollection<YHXMClass>).ToList();
-            string fileName = "优惠项目";
-            exporttoexcel.ListToExcel(fileName);
+            exporttoexcel.DataToPrint = (dgData.ItemsSource as ObservableCollection<CSMCClass>).ToList();
+            string fileName ="成色名称";
+            exporttoexcel.ListToExcel(fileName);//.GenerateReport();
         }
         private void Export_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -240,14 +249,14 @@ namespace LFZB_PMS
         }
         private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
-            YHXMClass obj = dgData.SelectedItem as YHXMClass;
+            CSMCClass obj = dgData.SelectedItem as CSMCClass;
             obj.IsDirty = true;
             ShowList();
         }
 
         private void dgData_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            YHXMClass obj = dgData.SelectedItem as YHXMClass;
+            CSMCClass obj = dgData.SelectedItem as CSMCClass;
             obj.IsDirty = true;
             ShowList();
         }

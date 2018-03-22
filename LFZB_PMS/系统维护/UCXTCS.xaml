@@ -4,18 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LFZB_PMS"
+             xmlns:cmd="clr-namespace:LFZB_PMS.Command"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="800" Loaded="UserControl_Loaded">
+             d:DesignHeight="500" d:DesignWidth="900" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <Style x:Key="textBlockStyle" TargetType="TextBlock">
-            <Setter Property="Margin" Value="0,3,10,3"></Setter>
+            <Setter Property="Margin" Value="0,5,10,3"></Setter>
             <Setter Property="HorizontalAlignment" Value="Right"></Setter>
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
             <Setter Property="Foreground" Value="Blue"></Setter>
         </Style>
         <Style x:Key="textBoxStyle" TargetType="TextBox">
-            <Setter Property="Margin" Value="3"></Setter>
-            <Setter Property="MinWidth" Value="60"></Setter>
+            <Setter Property="Margin" Value="2"></Setter>
+            <Setter Property="MinWidth" Value="100"></Setter>
+            <Setter Property="MinHeight" Value="22"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
             <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         </Style>
         <Style x:Key="comboBoxStyle" TargetType="ComboBox">
@@ -23,30 +26,277 @@
             <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
             <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         </Style>
+        <Style x:Key="radioButtonStyle" TargetType="RadioButton">
+            <Setter Property="Margin" Value="3"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
     </UserControl.Resources>
+    <UserControl.CommandBindings>
+        <CommandBinding Command="cmd:BaseCmd.cmd_refresh" Executed="Refresh_Executed" CanExecute="Refresh_CanExecute"></CommandBinding>
+        <CommandBinding Command="cmd:BaseCmd.cmd_save" Executed="Save_Executed" CanExecute="Save_CanExecute"></CommandBinding>
+        <CommandBinding Command="cmd:BaseCmd.cmd_close" Executed="Close_Executed" CanExecute="Close_CanExecute"></CommandBinding>
+    </UserControl.CommandBindings>
     <Grid>
-        <TabControl>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ToolBar Grid.Row="0" ToolBarTray.IsLocked="True" Grid.Column="1">
+            <Button Command="cmd:BaseCmd.cmd_refresh" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
+                <Image Source="/LFZB_PMS;component/Images/refresh.png" Margin="2"></Image>
+            </Button>
+            <Button Command="cmd:BaseCmd.cmd_save" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
+                <Image Source="/LFZB_PMS;component/Images/save.png" Margin="2"></Image>
+            </Button>
+            <Button Command="cmd:BaseCmd.cmd_close" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}">
+                <Image Source="/LFZB_PMS;component/Images/close.png" Margin="-4"></Image>
+            </Button>
+        </ToolBar>
+        
+        <TabControl Grid.Row="1">
             <TabItem Header="系统设置">
-                <Grid>
+                <Grid Name="gdxtsz">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="默认显示单据天数" Style="{StaticResource textBlockStyle}"></TextBlock>
-                    <ComboBox Grid.Column="1" Style="{StaticResource comboBoxStyle}"></ComboBox>
-                    <TextBlock Grid.Row="1" Text="单据明细最多行数" Style="{StaticResource textBlockStyle}"></TextBlock>
-                    <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource textBoxStyle}"></TextBox>
+                    <TextBlock  Grid.Row="0" Text="主界面及提示标题" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource textBoxStyle}" Text="{Binding Path=WinTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    <TextBlock  Grid.Row="1" Text="报表打印显示标题" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource textBoxStyle}" Text="{Binding Path=ReportTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    <TextBlock  Grid.Row="2" Text="打开窗口数量上限" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource textBoxStyle}" Text="{Binding Path=MaxOfOpenWin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    <TextBlock  Grid.Row="3" Text="默认显示单据天数" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource textBoxStyle}" Text="{Binding Path=DaysOfOrder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    <TextBlock Grid.Row="4" Text="首饰业务单逐一编辑" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <Grid Grid.Row="4" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Name="cbOrderEditWay_1" Style="{StaticResource ResourceKey=radioButtonStyle}">左隐藏</RadioButton>
+                        <RadioButton Grid.Column="1" Name="cbOrderEditWay_2" Style="{StaticResource ResourceKey=radioButtonStyle}">右隐藏</RadioButton>
+                        <RadioButton Grid.Column="2" Name="cbOrderEditWay_3" Style="{StaticResource ResourceKey=radioButtonStyle}">左打开</RadioButton>
+                        <RadioButton Grid.Column="3" Name="cbOrderEditWay_4" Style="{StaticResource ResourceKey=radioButtonStyle}">右打开</RadioButton>
+                    </Grid>
+                    <TextBlock Grid.Row="5" Text="列逐一编辑方式" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <Grid Grid.Row="5" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Name="cbColEditWay_1" Style="{StaticResource ResourceKey=radioButtonStyle}">同步多行列设置</RadioButton>
+                        <RadioButton Grid.Column="1" Name="cbColEditWay_2" Style="{StaticResource ResourceKey=radioButtonStyle}">不同步多行列设置</RadioButton>
+                    </Grid>
+                    <TextBlock Grid.Row="6" Text="单据明细最多行数" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <TextBox Grid.Row="6" Grid.Column="1" Style="{StaticResource textBoxStyle}" Text="{Binding Path=MaxRowsOfOrder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    <TextBlock Grid.Row="7" Text="数据保存最多行数" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <TextBox Grid.Row="7" Grid.Column="1" Style="{StaticResource textBoxStyle}" Text="{Binding Path=MaxRowsOfData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="原料管理"></TabItem>
+            <TabItem Header="原料管理">
+                <Grid Name="gdylgl">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Text="石料编号方式" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <Grid Grid.Row="0" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Name="cbSLCodeWay_1" Style="{StaticResource ResourceKey=radioButtonStyle}">手动输入</RadioButton>
+                        <RadioButton Grid.Column="1" Name="cbSLCodeWay_2" Style="{StaticResource ResourceKey=radioButtonStyle}">统一编号</RadioButton>
+                        <RadioButton Grid.Column="2" Name="cbSLCodeWay_3" Style="{StaticResource ResourceKey=radioButtonStyle}">单独编号</RadioButton>
+                    </Grid>
+                    <TextBlock Grid.Row="1" Text="石料编号长度" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource textBoxStyle}" Text="{Binding Path=LengthOfSLCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    <TextBlock Grid.Row="2" Text="石料成本计算方式" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <Grid Grid.Row="2" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Name="cbSLCBCalWay_1" Style="{StaticResource ResourceKey=radioButtonStyle}">加权平均</RadioButton>
+                        <RadioButton Grid.Column="1" Name="cbSLCBCalWay_2" Style="{StaticResource ResourceKey=radioButtonStyle}">首次入库</RadioButton>
+                        <RadioButton Grid.Column="2" Name="cbSLCBCalWay_3" Style="{StaticResource ResourceKey=radioButtonStyle}">最后入库</RadioButton>
+                    </Grid>
+                    <TextBlock Grid.Row="3" Text="金料成本计算方式" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <Grid Grid.Row="3" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Name="cbJLCBCalWay_1" Style="{StaticResource ResourceKey=radioButtonStyle}">加权平均</RadioButton>
+                        <RadioButton Grid.Column="1" Name="cbJLCBCalWay_2" Style="{StaticResource ResourceKey=radioButtonStyle}">首次入库</RadioButton>
+                        <RadioButton Grid.Column="2" Name="cbJLCBCalWay_3" Style="{StaticResource ResourceKey=radioButtonStyle}">最后入库</RadioButton>
+                    </Grid>
+                    <TextBlock Grid.Row="4" Text="石料入库同步库存资料" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <Grid Grid.Row="4" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Name="cbSLRK_1" Style="{StaticResource ResourceKey=radioButtonStyle}">允许</RadioButton>
+                        <RadioButton Grid.Column="1" Name="cbSLRK_2" Style="{StaticResource ResourceKey=radioButtonStyle}">禁止</RadioButton>
+                    </Grid>
+                    <TextBlock Grid.Row="5" Text="金料入库同步库存资料" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <Grid Grid.Row="5" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Name="cbJLRK_1" Style="{StaticResource ResourceKey=radioButtonStyle}">允许</RadioButton>
+                        <RadioButton Grid.Column="1" Name="cbJLRK_2" Style="{StaticResource ResourceKey=radioButtonStyle}">禁止</RadioButton>
+                    </Grid>
+                    <TextBlock Grid.Row="6" Text="石料单价可否修改" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <Grid Grid.Row="6" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Name="cbSLDJ_1" Style="{StaticResource ResourceKey=radioButtonStyle}">允许</RadioButton>
+                        <RadioButton Grid.Column="1" Name="cbSLDJ_2" Style="{StaticResource ResourceKey=radioButtonStyle}">禁止</RadioButton>
+                    </Grid>
+                    <TextBlock Grid.Row="7" Text="金料单价可否修改" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <Grid Grid.Row="7" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Name="cbJLDJ_1" Style="{StaticResource ResourceKey=radioButtonStyle}">允许</RadioButton>
+                        <RadioButton Grid.Column="1" Name="cbJLDJ_2" Style="{StaticResource ResourceKey=radioButtonStyle}">禁止</RadioButton>
+                    </Grid>
+                    <TextBlock Grid.Row="8" Text="石料库存数量允许偏差" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <TextBox Grid.Row="8" Grid.Column="1" Style="{StaticResource textBoxStyle}" Text="{Binding Path=OffsetOfSLCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    <TextBlock Grid.Row="8"  Grid.Column="2" Text="石料库存重量允许偏差" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <TextBox Grid.Row="8" Grid.Column="3" Style="{StaticResource textBoxStyle}" Text="{Binding Path=OffsetOfSLHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    <TextBlock Grid.Row="9" Text="金料库存数量允许偏差" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <TextBox Grid.Row="9" Grid.Column="1" Style="{StaticResource textBoxStyle}" Text="{Binding Path=OffsetOfJLCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    <TextBlock Grid.Row="9"  Grid.Column="2" Text="金料库存重量允许偏差" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <TextBox Grid.Row="9" Grid.Column="3" Style="{StaticResource textBoxStyle}" Text="{Binding Path=OffsetOfJLHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    <TextBlock Grid.Row="10" Text="石料进出重量数量默认" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <Grid Grid.Row="10" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Name="cbSLInOut_1" Style="{StaticResource ResourceKey=radioButtonStyle}">空值</RadioButton>
+                        <RadioButton Grid.Column="1" Name="cbSLInOut_2" Style="{StaticResource ResourceKey=radioButtonStyle}">库存值</RadioButton>
+                    </Grid>
+                    <TextBlock Grid.Row="11" Text="自动提取配件进价来源" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <Grid Grid.Row="11" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Name="cbPJJJLY_1" Style="{StaticResource ResourceKey=radioButtonStyle}">禁止提取</RadioButton>
+                        <RadioButton Grid.Column="1" Name="cbPJJJLY_2" Style="{StaticResource ResourceKey=radioButtonStyle}">成本单价</RadioButton>
+                        <RadioButton Grid.Column="2" Name="cbPJJJLY_3" Style="{StaticResource ResourceKey=radioButtonStyle}">核对单价</RadioButton>
+                    </Grid>
+                    <TextBlock Grid.Row="12" Text="自动提取配件市价来源" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <Grid Grid.Row="12" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Name="cbPJSJLY_1" Style="{StaticResource ResourceKey=radioButtonStyle}">禁止提取</RadioButton>
+                        <RadioButton Grid.Column="1" Name="cbPJSJLY_2" Style="{StaticResource ResourceKey=radioButtonStyle}">成本单价</RadioButton>
+                        <RadioButton Grid.Column="2" Name="cbPJSJLY_3" Style="{StaticResource ResourceKey=radioButtonStyle}">核对单价</RadioButton>
+                    </Grid>
+                    <TextBlock Grid.Row="13" Text="自动提取主石进价来源" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <Grid Grid.Row="13" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Name="cbZSJJLY_1" Style="{StaticResource ResourceKey=radioButtonStyle}">禁止提取</RadioButton>
+                        <RadioButton Grid.Column="1" Name="cbZSJJLY_2" Style="{StaticResource ResourceKey=radioButtonStyle}">成本单价</RadioButton>
+                        <RadioButton Grid.Column="2" Name="cbZSJJLY_3" Style="{StaticResource ResourceKey=radioButtonStyle}">核对单价</RadioButton>
+                    </Grid>
+                    <TextBlock Grid.Row="14" Text="自动提取主石市价来源" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <Grid Grid.Row="14" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Name="cbZSSJLY_1" Style="{StaticResource ResourceKey=radioButtonStyle}">禁止提取</RadioButton>
+                        <RadioButton Grid.Column="1" Name="cbZSSJLY_2" Style="{StaticResource ResourceKey=radioButtonStyle}">成本单价</RadioButton>
+                        <RadioButton Grid.Column="2" Name="cbZSSJLY_3" Style="{StaticResource ResourceKey=radioButtonStyle}">核对单价</RadioButton>
+                    </Grid>
+                    <TextBlock Grid.Row="15" Text="自动提取副石进价来源" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <Grid Grid.Row="15" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Name="cbFSJJLY_1" Style="{StaticResource ResourceKey=radioButtonStyle}">禁止提取</RadioButton>
+                        <RadioButton Grid.Column="1" Name="cbFSJJLY_2" Style="{StaticResource ResourceKey=radioButtonStyle}">成本单价</RadioButton>
+                        <RadioButton Grid.Column="2" Name="cbFSJJLY_3" Style="{StaticResource ResourceKey=radioButtonStyle}">核对单价</RadioButton>
+                    </Grid>
+                    <TextBlock Grid.Row="16" Text="自动提取副石市价来源" Style="{StaticResource textBlockStyle}"></TextBlock>
+                    <Grid Grid.Row="16" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Name="cbFSSJLY_1" Style="{StaticResource ResourceKey=radioButtonStyle}">禁止提取</RadioButton>
+                        <RadioButton Grid.Column="1" Name="cbFSSJLY_2" Style="{StaticResource ResourceKey=radioButtonStyle}">成本单价</RadioButton>
+                        <RadioButton Grid.Column="2" Name="cbFSSJLY_3" Style="{StaticResource ResourceKey=radioButtonStyle}">核对单价</RadioButton>
+                    </Grid>
+                </Grid>
+            </TabItem>
             <TabItem Header="入库管理"></TabItem>
             <TabItem Header="售价尾数"></TabItem>
             <TabItem Header="分销管理"></TabItem>

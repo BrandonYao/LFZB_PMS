@@ -237,7 +237,8 @@ namespace LFZB_PMS
                 new DAL.ExcelDAL.ExportToExcel<FXGZClass, List<FXGZClass>>();
             //实例化exporttoexcel对象
             exporttoexcel.DataToPrint = (dgData.ItemsSource as ObservableCollection<FXGZClass>).ToList();
-            exporttoexcel.GenerateReport();
+            string fileName = "分销柜组";
+            exporttoexcel.ListToExcel(fileName);
         }
         private void Export_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {

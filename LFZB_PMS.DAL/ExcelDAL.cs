@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
-using System.Windows.Controls;
-using System.Windows;
 using System.Reflection;
+using System.Data;
+using NPOI.SS.UserModel;
+using System.IO;
+using NPOI.XSSF.UserModel;
+using NPOI.HSSF.UserModel;
 
 namespace LFZB_PMS.DAL
 {
@@ -192,7 +192,61 @@ namespace LFZB_PMS.DAL
                     GC.Collect();
                 }
             }
+
+            /// <summary>
+            /// Datable导出成Excel
+            /// </summary>
+            /// <param name="file">文件名</param>
+            public void ListToExcel(string file, bool explorer = true)
+            {
+                string dirPath = Environment.CurrentDirectory + @"\Export";
+                if (!Directory.Exists(dirPath))
+                    Directory.CreateDirectory(dirPath);
+                file += DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls";
+                IWorkbook workbook;
+                string fileExt = Path.GetExtension(file).ToLower();
+                if (fileExt == ".xlsx") { workbook = new XSSFWorkbook(); } else if (fileExt == ".xls") { workbook = new HSSFWorkbook(); } else { workbook = null; }
+                if (workbook == null) { return; }
+                ISheet sheet = workbook.CreateSheet("Sheet1");
+
+                //表头  
+                IRow row = sheet.CreateRow(0);
+                PropertyInfo[] headerInfo = typeof(T).GetProperties();
+                for (int n = 0; n < headerInfo.Length; n++)
+                {
+                    ICell cell = row.CreateCell(n);
+                    cell.SetCellValue(headerInfo[n].Name);
+                }
+
+                //数据
+                for (int j = 0; j < DataToPrint.Count; j++)
+                {
+                    IRow row1 = sheet.CreateRow(j + 1);
+                    var item = DataToPrint[j];
+                    for (int i = 0; i < headerInfo.Length; i++)
+                    {
+                        ICell cell = row1.CreateCell(i);
+                        var y = typeof(T).InvokeMember(headerInfo[i].Name,
+                        BindingFlags.GetProperty, null, item, null);
+                        cell.SetCellValue(y == null ? "" : y.ToString());
+                    }
+                }
+
+                //转为字节数组  
+                MemoryStream stream = new MemoryStream();
+                workbook.Write(stream);
+                var buf = stream.ToArray();
+
+                //保存为Excel文件  
+                using (FileStream fs = new FileStream(dirPath + @"\" + file, FileMode.Create, FileAccess.Write))
+                {
+                    fs.Write(buf, 0, buf.Length);
+                    fs.Flush();
+                }
+                if (explorer)
+                    System.Diagnostics.Process.Start("Explorer", "/select," + dirPath + "\\" + file);
+            }
         }
-    #endregion
+        #endregion
     }
 }

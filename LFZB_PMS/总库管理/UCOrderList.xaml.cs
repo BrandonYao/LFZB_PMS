@@ -60,8 +60,8 @@ namespace LFZB_PMS
         }
         void ShowList()
         {
-            dgData.ItemsSource = null;
-            dgData.ItemsSource = BSMCList;
+            dgMaster.ItemsSource = null;
+            dgMaster.ItemsSource = BSMCList;
 
         }
         void CheckSave()
@@ -144,13 +144,13 @@ namespace LFZB_PMS
         }
         private void Edit_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            boolEdit = (dgData != null && dgData.SelectedItem != null);
+            boolEdit = (dgMaster != null && dgMaster.SelectedItem != null);
             e.CanExecute = boolEdit;
         }
         private void Del_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             if (!msgDal.ShowQuestion("确定要删除选中项吗？")) return;
-            OrderMaster obj = dgData.SelectedItem as OrderMaster;
+            OrderMaster obj = dgMaster.SelectedItem as OrderMaster;
             //bsmcDal.DeleteData(obj.BSMCCode);
             BSMCList.Remove(obj);
             ShowList();
@@ -244,8 +244,9 @@ namespace LFZB_PMS
             DAL.ExcelDAL.ExportToExcel<OrderMaster, List<OrderMaster>> exporttoexcel =
                 new DAL.ExcelDAL.ExportToExcel<OrderMaster, List<OrderMaster>>();
             //实例化exporttoexcel对象
-            exporttoexcel.DataToPrint = (dgData.ItemsSource as ObservableCollection<OrderMaster>).ToList();
-            exporttoexcel.GenerateReport();
+            exporttoexcel.DataToPrint = (dgMaster.ItemsSource as ObservableCollection<OrderMaster>).ToList();
+            string fileName = "单据明细";
+            exporttoexcel.ListToExcel(fileName);
         }
         private void Export_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -270,14 +271,14 @@ namespace LFZB_PMS
         }
         private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
-            OrderMaster obj = dgData.SelectedItem as OrderMaster;
+            OrderMaster obj = dgMaster.SelectedItem as OrderMaster;
             //obj.IsDirty = true;
             ShowList();
         }
 
         private void dgData_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            OrderMaster obj = dgData.SelectedItem as OrderMaster;
+            OrderMaster obj = dgMaster.SelectedItem as OrderMaster;
             //obj.IsDirty = true;
             ShowList();
         }

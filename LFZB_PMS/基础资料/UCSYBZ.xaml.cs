@@ -213,7 +213,8 @@ namespace LFZB_PMS
                 new DAL.ExcelDAL.ExportToExcel<SYBZClass, List<SYBZClass>>();
             //实例化exporttoexcel对象
             exporttoexcel.DataToPrint = (dgData.ItemsSource as ObservableCollection<SYBZClass>).ToList();
-            exporttoexcel.GenerateReport();
+            string fileName = "收银班组";
+            exporttoexcel.ListToExcel(fileName);
         }
         private void Export_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {

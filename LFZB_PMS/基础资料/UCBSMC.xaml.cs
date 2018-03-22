@@ -217,7 +217,8 @@ namespace LFZB_PMS
                 new DAL.ExcelDAL.ExportToExcel<BSMCClass, List<BSMCClass>>();
             //实例化exporttoexcel对象
             exporttoexcel.DataToPrint = (dgData.ItemsSource as ObservableCollection<BSMCClass>).ToList();
-            exporttoexcel.GenerateReport();
+            string fileName = "宝石名称";
+            exporttoexcel.ListToExcel(fileName);
         }
         private void Export_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {

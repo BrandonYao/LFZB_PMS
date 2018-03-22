@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using static LFZB_PMS.CommModel;
 using static LFZB_PMS.DAL.GYSDAL;
+using System.Linq;
 
 namespace LFZB_PMS
 {
@@ -145,7 +147,7 @@ namespace LFZB_PMS
             if (list.Count > 0)
                 ShowData(list[0].GYSZCode, list[0].ZYCPCode);
         }
-        public IList<GYSClass> GYSList = new List<GYSClass>();
+        public ObservableCollection<GYSClass> GYSList = new ObservableCollection<GYSClass>();
         void ShowData(string gyszCode, string zycpCode)
         {
             GYSList.Clear();
@@ -361,6 +363,12 @@ namespace LFZB_PMS
         }
         private void Export_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            DAL.ExcelDAL.ExportToExcel<GYSClass, List<GYSClass>> exporttoexcel =
+                new DAL.ExcelDAL.ExportToExcel<GYSClass, List<GYSClass>>();
+            //实例化exporttoexcel对象
+            exporttoexcel.DataToPrint = (dgData.ItemsSource as ObservableCollection<GYSClass>).ToList();
+            string fileName = "供应商";
+            exporttoexcel.ListToExcel(fileName);
         }
         private void Export_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {

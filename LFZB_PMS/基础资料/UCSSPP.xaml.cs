@@ -209,7 +209,8 @@ namespace LFZB_PMS
                 new DAL.ExcelDAL.ExportToExcel<SSPPClass, List<SSPPClass>>();
             //实例化exporttoexcel对象
             exporttoexcel.DataToPrint = (List<SSPPClass>)dgData.ItemsSource;
-            exporttoexcel.GenerateReport();
+            string fileName = "首饰品牌";
+            exporttoexcel.ListToExcel(fileName);
         }
         private void Export_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
