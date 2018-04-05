@@ -20,7 +20,7 @@
         <CommandBinding Command="cmd:BaseCmd.cmd_confirm_not" Executed="Confirm_Not_Executed" CanExecute="Confirm_Not_CanExecute"></CommandBinding>
         <CommandBinding Command="cmd:BaseCmd.cmd_check" Executed="Check_Executed" CanExecute="Check_CanExecute"></CommandBinding>
         <CommandBinding Command="cmd:BaseCmd.cmd_check_not" Executed="Check_Not_Executed" CanExecute="Check_Not_CanExecute"></CommandBinding>
-        
+
         <CommandBinding Command="cmd:BaseCmd.cmd_print" Executed="Print_Executed" CanExecute="Print_CanExecute"></CommandBinding>
         <CommandBinding Command="cmd:BaseCmd.cmd_export" Executed="Export_Executed" CanExecute="Export_CanExecute"></CommandBinding>
         <CommandBinding Command="cmd:BaseCmd.cmd_close" Executed="Close_Executed" CanExecute="Close_CanExecute"></CommandBinding>
@@ -82,26 +82,36 @@
             </Button>
         </ToolBar>
 
-        <DataGrid Grid.Row="1" Grid.Column="1" Name="dgMaster" LoadingRow="dgData_LoadingRow" CellEditEnding="dgData_CellEditEnding">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="入库单号" Binding="{Binding Path=OrderCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
-                <DataGridTextColumn Header="首饰大类" Binding="{Binding Path=SSDLName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
-                <DataGridTextColumn Header="入库日期" Binding="{Binding Path=OrderDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
-                <DataGridTextColumn Header="供应商" Binding="{Binding Path=GYSName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
-                <DataGridTextColumn Header="件数" Binding="{Binding Path=Count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
-                <DataGridTextColumn Header="计划分销" Binding="{Binding Path=PlanFXSName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
-                <DataGridTextColumn Header="状态" Binding="{Binding Path=StateText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
-                <DataGridTextColumn Header="单据备注" Binding="{Binding Path=BZ, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
-                <DataGridTextColumn Header="单据分类" Binding="{Binding Path=OrderTypeText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
-                <DataGridTextColumn Header="总库库位" Binding="{Binding Path=ZKKWName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
-                <DataGridTextColumn Header="制单人" Binding="{Binding Path=CreateUserName}" IsReadOnly="True"></DataGridTextColumn>
-                <DataGridTextColumn Header="制单时间" Binding="{Binding Path=CreateTime}" IsReadOnly="True"></DataGridTextColumn>
-                <DataGridTextColumn Header="确认人" Binding="{Binding Path=ConfirmUserName}" IsReadOnly="True"></DataGridTextColumn>
-                <DataGridTextColumn Header="确认时间" Binding="{Binding Path=ConfirmTime}" IsReadOnly="True"></DataGridTextColumn>
-                <DataGridTextColumn Header="审核人" Binding="{Binding Path=CheckUserName}" IsReadOnly="True"></DataGridTextColumn>
-                <DataGridTextColumn Header="审核时间" Binding="{Binding Path=CheckTime}" IsReadOnly="True"></DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <DataGrid Name="dgMaster" LoadingRow="dgData_LoadingRow" CellEditEnding="dgData_CellEditEnding" Grid.Column="0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="入库单号" Binding="{Binding Path=OrderCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="首饰大类" Binding="{Binding Path=SSDLName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="入库日期" Binding="{Binding Path=OrderDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="供应商" Binding="{Binding Path=GYSName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="件数" Binding="{Binding Path=Count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="计划分销" Binding="{Binding Path=PlanFXSName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="状态" Binding="{Binding Path=StateText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="单据备注" Binding="{Binding Path=BZ, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="单据分类" Binding="{Binding Path=OrderTypeText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="总库库位" Binding="{Binding Path=ZKKWName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="制单人" Binding="{Binding Path=CreateUserName}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="制单时间" Binding="{Binding Path=CreateTime}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="确认人" Binding="{Binding Path=ConfirmUserName}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="确认时间" Binding="{Binding Path=ConfirmTime}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="审核人" Binding="{Binding Path=CheckUserName}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="审核时间" Binding="{Binding Path=CheckTime}" IsReadOnly="True"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <StackPanel Grid.Column="1">
+                <Button>新增入库单</Button>
+                <Button>修改入库单</Button>
+            </StackPanel>
+        </Grid>
 
         <DataGrid Grid.Row="2" Grid.Column="1" Name="dgDetails" LoadingRow="dgData_LoadingRow" CellEditEnding="dgData_CellEditEnding">
             <DataGrid.Columns>
@@ -126,7 +136,7 @@
         </DataGrid>
 
         <Grid Grid.Row="3">
-            
+
         </Grid>
     </Grid>
 </UserControl>
