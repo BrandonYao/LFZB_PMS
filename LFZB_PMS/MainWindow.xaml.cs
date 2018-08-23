@@ -107,8 +107,8 @@ namespace LFZB_PMS
         private void bsmcwh_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             RoutedUICommand cmd = (RoutedUICommand)e.Command;
-            UCBSMC uc = new UCBSMC();
-            uc.UCClose += new UCBSMC.HandleClose(ItemClose);
+            BSMC.UCBSMC uc = new BSMC.UCBSMC();
+            uc.UCClose += new BSMC.UCBSMC.HandleClose(ItemClose);
             ShowUC(uc, cmd.Text);
         }
         private void bssxwh_Executed(object sender, ExecutedRoutedEventArgs e)
